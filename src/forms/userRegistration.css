@@ -1,0 +1,10 @@
+
+img{
+  margin: 150px auto;
+}
+
+@media only screen and (max-width: 425px) {
+  img{
+    margin: 10px auto;
+  }
+}

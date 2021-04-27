@@ -1,5 +1,6 @@
 import {makeStyles} from '@material-ui/core/styles';
 
+import ShoppingBG from '../images/shopping-bag-kelly-sikkema-1Pgq9ZpIatI-unsplash.jpg'
 
 
 const useStyles = makeStyles((theme)=>({
@@ -15,6 +16,22 @@ const useStyles = makeStyles((theme)=>({
   },
   avatarStyle:{
     backgroundColor: '#a3124e'
+  },
+  //Log in Form
+  logIn:{
+    backgroundImage: `url(${ShoppingBG})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover'
+  },
+  logInForm:{
+    marginTop: '200px'
+  },
+  //Form style
+  formStyle:{
+    backgroundColor: '#fcfcf5',
+    padding: "10px",
+    borderRadius: "5px"
   }
 }));
 

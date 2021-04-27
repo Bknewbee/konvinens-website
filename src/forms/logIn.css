@@ -1,0 +1,15 @@
+#logIn img{
+  margin-top: 50px;
+}
+.loginStyle{
+  min-height: 90vh;
+}
+#logIn form{
+  margin-top: 50%;
+}
+
+@media only screen and (max-width: 425px) {
+  #logIn form{
+    margin-top: 10%;
+  }
+}
