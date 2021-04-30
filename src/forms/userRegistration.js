@@ -43,12 +43,15 @@ const UserRegistration = () => {
             Complete the form to create account
           </Typography>
         </Grid>
-        <form onSubmit={handleSubmit}>
-          <TextField required fullWidth label="Name" placeholder="Full Personal Name or Company Name"/>
-          <TextField required fullWidth label="E-mail" placeholder="Enter email address"/>
-          <TextField required fullWidth label="Phone Number" placeholder="Enter Phone Number"/>
-          <TextField required fullWidth label="Password" placeholder="Password should be more than 5 characters"/>
-          <TextField required fullWidth label="Confirm Password" placeholder="Enter the same password"/>
+        <form action="POST" data-netlify="true">
+          <TextField required fullWidth label="Name" name="name" placeholder="Full Personal Name or Company Name"/>
+          <TextField required fullWidth label="E-mail" name="email" placeholder="Enter email address"/>
+          <TextField required fullWidth label="Phone Number" name="phone-number" placeholder="Enter Phone Number"/>
+          <TextField required fullWidth label="Password" name="password" placeholder="Password should be more than 5 characters"/>
+          <TextField required fullWidth label="Confirm Password" name="confirm-password" placeholder="Enter the same password"/>
+
+          <div data-netlify-recaptcha="true"></div>
+
           <FormControlLabel
             control={<Checkbox
                       checked={state.serviceProvider}
