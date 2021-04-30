@@ -18,15 +18,7 @@ const UserRegistration = () => {
   const handleChange = (event) =>{
     setState({...state, [event.target.name]: event.target.checked})
   }
-  const handleSubmit = (event) =>{
-    event.preventDefault();
-    if(state.termsAndConditions === false){
-      alert('Can not create account with out accepting the Terms and Conditions')
-    }else{
-      alert('Will register');
-    }
 
-  }
 
   return(
     <Paper elevation="5" className={classes.paperStyle}>
@@ -43,7 +35,7 @@ const UserRegistration = () => {
             Complete the form to create account
           </Typography>
         </Grid>
-        <form submit={handleSubmit} action="POST" data-netlify="true">
+        <form action="POST" data-netlify="true">
           <TextField required fullWidth label="Name" name="name" placeholder="Full Personal Name or Company Name"/>
           <TextField required fullWidth label="E-mail" name="email" placeholder="Enter email address"/>
           <TextField required fullWidth label="Phone Number" name="phone-number" placeholder="Enter Phone Number"/>
