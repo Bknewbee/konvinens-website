@@ -43,7 +43,7 @@ const UserRegistration = () => {
             Complete the form to create account
           </Typography>
         </Grid>
-        <form action="POST" data-netlify="true">
+        <form submit={handleSubmit} action="POST" data-netlify="true">
           <TextField required fullWidth label="Name" name="name" placeholder="Full Personal Name or Company Name"/>
           <TextField required fullWidth label="E-mail" name="email" placeholder="Enter email address"/>
           <TextField required fullWidth label="Phone Number" name="phone-number" placeholder="Enter Phone Number"/>
