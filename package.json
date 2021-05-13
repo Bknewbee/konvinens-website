@@ -1,7 +1,7 @@
 {
   "name": "konvinens-deploy-website",
   "version": "0.1.0",
-  "proxy": " https://konvinens.herokuapp.com/",
+  "proxy": "https://konvinens.herokuapp.com/",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
