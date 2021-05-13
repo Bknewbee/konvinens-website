@@ -23,7 +23,7 @@ function App() {
 
     axios.get(`https://konvinens.herokuapp.com/api/user-logout`, config)
       .then((res)=> {
-        setMsg(res.data);
+        setMsg(res.data.msg);
         setData(null);
       })
       .catch((err)=> console.log(err))
@@ -36,7 +36,7 @@ function App() {
     axios.get(`https://konvinens.herokuapp.com/api/user`, config)
       .then((res)=> {
         console.log(res);
-        setData(res.data)
+        setData(res.data.user)
       })
       .catch((err)=> console.log(err))
 
