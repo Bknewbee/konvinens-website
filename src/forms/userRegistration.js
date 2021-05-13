@@ -51,7 +51,7 @@ const UserRegistration = (props) => {
         withCredentials: true
       }
       if(state.termsAndConditions){
-        axios.post(`/api/user-registration`, formData, config)
+        axios.post(`https://konvinens.herokuapp.com/api/user-registration`, formData, config)
           .then((res)=>{
             console.log(res);
             setMsg(res.data.msg);
