@@ -12,7 +12,7 @@ const LogIn = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [msg, setMsg] = useState(null);
 
   const handleSubmit = (event) =>{
     event.preventDefault();
@@ -27,6 +27,7 @@ const LogIn = () => {
     axios.post(`https://konvinens.herokuapp.com/api/user-login`, formData, config)
       .then((res)=>{
         console.log(res);
+        setMsg(res.data);
       })
       .catch((err)=>{
         console.log(err);
@@ -35,6 +36,7 @@ const LogIn = () => {
 
   return(
     <Paper id="logIn"elevation={5} className={classes.paperStyle}>
+      {msg ? <div className={msg.param}>{msg.text}</div>:<div></div>}
       <Grid container className="loginStyle">
         <Grid item sm={5} xs={12} className={classes.formStyle}>
           <form onSubmit={handleSubmit}>
