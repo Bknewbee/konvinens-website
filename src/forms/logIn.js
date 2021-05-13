@@ -16,7 +16,6 @@ const LogIn = () => {
 
   const handleSubmit = (event) =>{
     event.preventDefault();
-
     let formData = {
       email: email,
       password: password
@@ -25,10 +24,9 @@ const LogIn = () => {
       withCredentials: true
     }
 
-    axios.post(`https://konvinens.herokuapp.com/api/user-login`, formData, config)
+    axios.post(`/api/user-login`, formData, config)
       .then((res)=>{
         console.log(res);
-        window.location = "/";
       })
       .catch((err)=>{
         console.log(err);
@@ -48,14 +46,15 @@ const LogIn = () => {
             <hr/>
 
             <Button  type="submit" variant="contained" color="primary">
-              Sign Up
+              Sign In
             </Button>
 
           </form>
           <br/>
           <div>
             <p>Dont have an account go on and </p>
-            <a href="/user-registration">Create Account</a>
+            <a href="/user-registration">Create Account</a> <br/>
+            <a href="/">Go Home Page</a>
           </div>
         </Grid>
         <Grid item sm={7} xs={12} className={classes.logIn}>

@@ -21,7 +21,7 @@ function App() {
       withCredentials: true
     }
 
-    axios.get(`https://konvinens.herokuapp.com/api/user-logout`, config)
+    axios.get(`/api/user-logout`, config)
       .then((res)=> {
         setMsg(res.data);
         setData(null);
@@ -33,7 +33,8 @@ function App() {
       withCredentials: true
     }
 
-    axios.get(`https://konvinens.herokuapp.com/api/user`, config).then((res)=> setData(res.data))
+    axios.get(`/api/user`, config)
+      .then((res)=> setData(res.data))
       .catch((err)=> console.log(err))
 
   }
