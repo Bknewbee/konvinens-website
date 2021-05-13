@@ -25,7 +25,7 @@ const LogIn = () => {
       withCredentials: true
     }
 
-    axios.post(`/api/user-login`, formData, config)
+    axios.post(`https://konvinens.herokuapp.com/api/user-login`, formData, config)
       .then((res)=>{
         console.log(res);
         window.location = "/";
