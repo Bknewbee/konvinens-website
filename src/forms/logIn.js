@@ -1,5 +1,6 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Grid, Paper, Avatar, TextField, Button} from '@material-ui/core';
+import axios from 'axios';
 
 import useStyles from '../styling/styles';
 import './logIn.css';
@@ -9,20 +10,40 @@ import logo from "../images/logo.png"
 const LogIn = () => {
   const classes = useStyles();
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
   const handleSubmit = (event) =>{
     event.preventDefault();
-    alert('Will log in');
+
+    let formData = {
+      email: email,
+      password: password
+    }
+    let config = {
+      withCredentials: true
+    }
+
+    axios.post(`/api/user-login`, formData, config)
+      .then((res)=>{
+        console.log(res);
+        window.location = "/";
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
   }
 
   return(
-    <Paper id="logIn"elevation="5" className={classes.paperStyle}>
+    <Paper id="logIn"elevation={5} className={classes.paperStyle}>
       <Grid container className="loginStyle">
         <Grid item sm={5} xs={12} className={classes.formStyle}>
           <form onSubmit={handleSubmit}>
             <Avatar className={classes.avatarStyle} style={{margin:'20px auto'}}></Avatar>
 
-            <TextField required fullWidth label="UserName" placeholder="Full Personal Name or Company Name"/>
-            <TextField required fullWidth label="Password" placeholder="Full Personal Name or Company Name"/>
+            <TextField required fullWidth label="E-mail" name="email" placeholder="e-mail" onChange={e => setEmail(e.target.value)} value={email}/>
+            <TextField required fullWidth label="Password" name="password" type="password" placeholder="password" onChange={e => setPassword(e.target.value)} value={password}/>
 
             <hr/>
 
