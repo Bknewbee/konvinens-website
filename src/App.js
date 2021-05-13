@@ -33,7 +33,7 @@ function App() {
       withCredentials: true
     }
 
-    axios.get(`https://konvinens.herokuapp.com/api/user`, config)
+    axios.get(`/api/user`, config)
       .then((res)=> {
         console.log(res.data);
         setData(res.data)
