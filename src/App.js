@@ -35,7 +35,7 @@ function App() {
 
     axios.get(`https://konvinens.herokuapp.com/api/user`, config)
       .then((res)=> {
-        console.log(res.data);
+        console.log(res);
         setData(res.data)
       })
       .catch((err)=> console.log(err))
