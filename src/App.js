@@ -51,6 +51,7 @@ function App() {
           <Route exact path="/">
             <header className="App-header">
               <img src={logo} className="App-logo" alt="logo" />
+              {console.log(data)}
               {data ? <div><h1>Welcome <br/><i>{data.name}</i><hr/></h1><button onClick={logOut}>Log Out</button></div>: <div></div>}
               {msg ? <h1>{msg.text}</h1>:<div></div>}
               <p>
