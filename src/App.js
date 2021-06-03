@@ -46,6 +46,7 @@ function App() {
   }
   const logOut = () => {
     setUser(null);
+    setMsg({msgText: "logged out"});
     /*
     let config = {
       withCredentials: true
