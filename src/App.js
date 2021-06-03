@@ -45,6 +45,8 @@ function App() {
     setUser({name: "John Doe"});
   }
   const logOut = () => {
+    setUser(null);
+    /*
     let config = {
       withCredentials: true
     }
@@ -55,6 +57,7 @@ function App() {
         setUser(null);
       })
       .catch((err)=> console.log(err))
+      */
   }
   const getuser = () =>{
     let config = {
