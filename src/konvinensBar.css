@@ -1,0 +1,12 @@
+nav .navbar-nav p{
+
+}
+nav .search{
+  width: auto;
+}
+
+@media only screen and (max-width: 768px) {
+  nav .search{
+    width: 100%;
+  }
+}

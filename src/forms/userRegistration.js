@@ -51,7 +51,7 @@ const UserRegistration = (props) => {
         withCredentials: true
       }
       if(state.termsAndConditions){
-        axios.post(`https://konvinens.herokuapp.com/api/user-registration`, formData, config)
+        axios.post(`/api/user-registration`, formData, config)
           .then((res)=>{
             console.log(res);
             setMsg(res.data.msg);
@@ -69,7 +69,7 @@ const UserRegistration = (props) => {
 
 
   return(
-    <Paper elevation={5} className={classes.paperStyle}>
+    <Paper id="UserRegistration" elevation={5} className={classes.paperStyle}>
       {msg ? <div className={msg.param}>{msg.text}</div> : <div></div>}
       <Grid container style={{minHeight: '90vh'}}>
         <Grid item sm={5} className={classes.logIn}>

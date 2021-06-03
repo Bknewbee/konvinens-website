@@ -24,7 +24,7 @@ const LogIn = () => {
       withCredentials: true
     }
 
-    axios.post(`https://konvinens.herokuapp.com/api/user-login`, formData, config)
+    axios.post(`/api/user-login`, formData, config)
       .then((res)=>{
         console.log(res);
         setMsg(res.data);
@@ -55,8 +55,7 @@ const LogIn = () => {
           <br/>
           <div>
             <p>Dont have an account go on and </p>
-            <a href="/user-registration">Create Account</a> <br/>
-            <a href="/">Go Home Page</a>
+            <a href="/user-registration">Create an Account</a>
           </div>
         </Grid>
         <Grid item sm={7} xs={12} className={classes.logIn}>
