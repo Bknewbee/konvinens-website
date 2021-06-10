@@ -3,3 +3,6 @@
   width: 20rem;
   height: 350px;
 }
+#Product .MuiCardMedia-img:hover{
+  height: 185px;
+}

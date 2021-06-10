@@ -10,18 +10,23 @@ import './product.css';
 
 const useStyles = makeStyles({
   root:{
+    transition: "transform 0.15s ease-in-out"
   },
   media:{
-    height: 140,
-  },
+    height: 150,
+  }
 })
 
 export default function Product (props) {
   const classes = useStyles();
+
   var shortDes = props.description.substring(0,80) + "..." ;
 
   return (
-      <Card className={classes.root} variant="outlined" id="Product">
+      <Card
+        className={classes.root}
+        id="Product"
+        >
         <CardActionArea>
           <CardMedia
             className={classes.media}

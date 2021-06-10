@@ -15,29 +15,10 @@ import Product from "./product.js";
 import UserRegistration from './forms/userRegistration';
 import LogIn from './forms/logIn';
 import './App.css';
+import products from "./productItems.js";
 
 function App() {
   let [user, setUser] = useState(null);
-  let products = [
-    {
-      img: "https://images-na.ssl-images-amazon.com/images/I/61j4acmknmL._AC_SX355_.jpg",
-      owner: "Easy Drones",
-      name: "DXL drone",
-      description: "Red flying drone with 1080p camera Multi-Rotor. If you want to get a small camera in the air for a short period of time, then it is hard to argue with a multi-rotor.",
-      price: 128.85,
-      promoPrice: 20,
-      onSale: false
-    },
-    {
-      img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1059&q=80",
-      owner: "Omega watch",
-      name: "Time Piece",
-      description: "Omega watches were the choice of NASA and the first watch on the Moon in 1969 for Apollo 11 mission. In addition, Omega has been the official timekeeper of the Olympic Games since 1932.",
-      price: 528.95,
-      promoPrice: 10,
-      onSale: true
-    }
-  ]
 
   const [msg, setMsg] = useState({});
 
