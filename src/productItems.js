@@ -1,5 +1,6 @@
 const products = [
   {
+    id:"1",
     img: "https://images-na.ssl-images-amazon.com/images/I/61j4acmknmL._AC_SX355_.jpg",
     owner: "Easy Drones",
     name: "DXL drone",
@@ -7,10 +8,11 @@ const products = [
     price: 128.85,
     promoPrice: 20,
     onSale: false,
-    category: ["Electronics"],
+    category: ["Electronics","Drones"],
     stock: 15
   },
   {
+    id:"2",
     img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1059&q=80",
     owner: "Omega watch",
     name: "Time Piece",
@@ -22,6 +24,7 @@ const products = [
     stock: 5
   },
   {
+    id:"3",
     img: "https://images.samsung.com/is/image/samsung/au-galaxy-tab-s7-t875-sm-t870nznaxsa-frontmysticbronze-315512007?$720_576_PNG$",
     owner: "J-Phones",
     name: "Samsung Galaxy Tab S7",
@@ -33,6 +36,7 @@ const products = [
     stock: 8
   },
   {
+    id:"4",
     img: "https://www.skymartbw.com/wp-content/uploads/2021/03/HP-255-G8-Click-Tek.jpg",
     owner: "J-Phones",
     name: "HP Notebook 15ra011ni",
@@ -40,10 +44,11 @@ const products = [
     price: 3995.00,
     promoPrice: 0,
     onSale: false,
-    category: ["Electronics","Laptop"],
+    category: ["Mobile Phones"],
     stock: 4
   },
   {
+    id:"5",
     img: "https://www.builders.co.za/media/h1e%2Fhf2%2F9558944284702.jpg",
     owner: "Clear Paints",
     name: "Pro Soft Sheen Jute Paint",
@@ -55,6 +60,7 @@ const products = [
     stock: 0
   },
   {
+    id:"6",
     img: "https://cdn.rona.ca/images/30855276_L.jpg",
     owner: "Deers Furniture",
     name: "Bosch Gas Burner Stove",
@@ -62,10 +68,11 @@ const products = [
     price: 7995.00,
     promoPrice: 12,
     onSale: true,
-    category: ["Cooking Appliances"],
+    category: ["Cooking","Appliances","Electronics"],
     stock: 6
   },
   {
+    id:"7",
     img: "https://www.lg.com/au/images/microwave-ovens/md07504245/gallery/Zz4.jpg",
     owner: "Deers Furniture",
     name: "LG Microwave(56L) MS5HIT",
@@ -73,10 +80,11 @@ const products = [
     price: 2599.00,
     promoPrice: 12,
     onSale: true,
-    category: ["Cooking Appliances"],
+    category: ["Cooking","Appliances","Electronics"],
     stock: 45
   },
   {
+    id:"8",
     img: "https://images-na.ssl-images-amazon.com/images/I/415XTlnUAXL.jpg",
     owner: "Deers Furniture",
     name: "Gold 4 BAr OScillating Halogen Heater",
@@ -88,6 +96,7 @@ const products = [
     stock: 2
   },
   {
+    id:"9",
     img: "https://cdn.shopify.com/s/files/1/0041/9115/8383/products/delonghi7finoilheater_1024x@3x.jpg?v=1591288490",
     owner: "Deers Furniture",
     name: "Delonghi KH75512 12 Fin Oil Heater",

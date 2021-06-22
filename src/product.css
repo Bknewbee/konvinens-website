@@ -1,7 +1,7 @@
 #Product{
   margin: 0 auto;
   width: 20rem;
-  height: 350px;
+  height: 380px;
 }
 #Product .MuiCardMedia-img:hover{
   height: 185px;

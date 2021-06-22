@@ -14,6 +14,7 @@ import KonvinensBar from './konvinensBar.js';
 import Product from "./product.js";
 import UserRegistration from './forms/userRegistration';
 import LogIn from './forms/logIn';
+import ProductDetails from './productDetails.js';
 import './App.css';
 import products from "./productItems.js";
 
@@ -61,7 +62,7 @@ function App() {
     <div className="App">
       <Router>
         <KonvinensBar user={user}/>
-        <Switch>
+        <Switch >
           <Route exact path="/">
             <header className="App-header">
               <img src={logo} className="App-logo" alt="logo" />
@@ -76,7 +77,7 @@ function App() {
               <Grid container spacing={1} justify="center">
               {
                 products.map((product, i)=>{
-                  return <Grid item key={i}><Product img={product.img} name={product.name} owner={product.owner} description={product.description} price={product.price} promoPrice={product.promoPrice} onSale={product.onSale}></Product></Grid>
+                  return <Grid item key={i}><Product id={product.id} img={product.img} name={product.name} owner={product.owner} description={product.description} price={product.price} promoPrice={product.promoPrice} onSale={product.onSale}></Product></Grid>
                 })
               }
             </Grid>
@@ -87,6 +88,9 @@ function App() {
           </Route>
           <Route path="/user-registration">
             <UserRegistration/>
+          </Route>
+          <Route path="/product/:productId">
+            <ProductDetails/>
           </Route>
         </Switch>
       </Router>

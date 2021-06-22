@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 export default function Product (props) {
   const classes = useStyles();
 
-  var shortDes = props.description.substring(0,80) + "..." ;
+  var shortDes = props.description.substring(0,70) + "..." ;
 
   return (
       <Card
@@ -41,9 +41,12 @@ export default function Product (props) {
           </CardContent>
         </CardActionArea>
         <CardContent>
+          <Typography  component="p" align="left">
+            <a href={"/product/"+props.id}>{props.name}</a>
+          </Typography>
           <Typography variant="body2" color="textSecondary" component="p" align="left" gutterBottom className="description">
             {
-              props.description.length > 80 ?
+              props.description.length > 70 ?
               shortDes :
               props.description
             }
@@ -51,13 +54,14 @@ export default function Product (props) {
           <hr/>
           <Typography component="div" className="row">
             <div className="col-3">
-              <Tooltip title="Add to cart" placement="top">
-                <AddShoppingCartIcon></AddShoppingCartIcon>
+
+              <Tooltip  title="Add to cart" placement="top">
+                <AddShoppingCartIcon fontSize="large"></AddShoppingCartIcon>
               </Tooltip>
             </div>
             <div className="col-3">
               <Tooltip title="Add to wish list" placement="top">
-                <PlaylistAddIcon></PlaylistAddIcon>
+                <PlaylistAddIcon fontSize="large"></PlaylistAddIcon>
               </Tooltip>
             </div>
             {
