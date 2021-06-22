@@ -8,7 +8,7 @@ const products = [
     price: 128.85,
     promoPrice: 20,
     onSale: false,
-    category: ["Electronics","Drones"],
+    category: ["Drones"],
     stock: 15
   },
   {
@@ -32,7 +32,7 @@ const products = [
     price: 11499.00,
     promoPrice: 0,
     onSale: false,
-    category: ["Electronics","Mobile Phones"],
+    category: ["Mobile Phones"],
     stock: 8
   },
   {
@@ -44,7 +44,7 @@ const products = [
     price: 3995.00,
     promoPrice: 0,
     onSale: false,
-    category: ["Mobile Phones"],
+    category: ["Laptop"],
     stock: 4
   },
   {
@@ -68,7 +68,7 @@ const products = [
     price: 7995.00,
     promoPrice: 12,
     onSale: true,
-    category: ["Cooking","Appliances","Electronics"],
+    category: ["Cooking","Appliances"],
     stock: 6
   },
   {
@@ -80,7 +80,7 @@ const products = [
     price: 2599.00,
     promoPrice: 12,
     onSale: true,
-    category: ["Cooking","Appliances","Electronics"],
+    category: ["Cooking","Appliances"],
     stock: 45
   },
   {
