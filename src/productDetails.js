@@ -18,11 +18,14 @@ class ProductDetails extends Component {
       product: null,
       similarProducts: [],
       msg:{},
-      purchaseQuantity: 1
+      purchaseQuantity: 1,
+      cart: ''
     };
     this.changeQuantity = this.changeQuantity.bind(this);
     this.increment = this.increment.bind(this);
     this.decrement = this.decrement.bind(this);
+    this.cart = this.cart.bind(this);
+    this.addToCart = this.addToCart.bind(this);
   }
   increment(){
       if(this.state.purchaseQuantity === this.state.product.stock){
@@ -38,6 +41,36 @@ class ProductDetails extends Component {
     }else{
       this.setState({purchaseQuantity: this.state.purchaseQuantity -1});
     }
+  }
+  addToCart(){
+      console.log(this.state.cart);
+      if(!this.state.cart.split("").includes(this.state.productId)){
+        this.setState({cart: this.state.cart.concat(this.state.productId)});
+        console.log(this.state.cart);
+        //sessionStorage.setItem('cart', this.state.cart.concat(this.state.productId));
+        alert("added to cart")
+      }else{
+        alert("product in cart")
+      }
+
+  }
+  cart(){
+    return  <ul className="list-group">
+              {
+                window.sessionStorage.cart.length > 0 ?
+
+                window.sessionStorage.cart.split('').map((productCart, i)=>(
+                  products.map((product,i)=>(
+                    productCart === product.id ?
+                    <li className="list-group-item" key={i}>{product.name}</li>
+                    :
+                    null
+                  ))
+                ))
+                :
+                <p>No items in cart</p>
+              }
+            </ul>
   }
   changeQuantity(event){
     console.log(event.target.name);
@@ -56,10 +89,19 @@ class ProductDetails extends Component {
   }
   componentDidMount(){
     //console.log(this.props.match.params.productId);
+    this.setState({cart: sessionStorage.getItem('cart')},
+    function (){
+      console.log(this.state.cart);
+      sessionStorage.setItem('cart', this.state.cart.concat(this.state.productId));
+    }
+
+    );
+
+
+
     var joined = this.state.similarProducts;
     this.setState({productId: this.props.match.params.productId});
     const found = products.find(({id}) => id === this.props.match.params.productId)
-
     if(found){
      this.setState({product: found},
        function(){
@@ -96,6 +138,7 @@ class ProductDetails extends Component {
         return this.setState({msg: {text:"Product not found"}})
       }
     })*/
+
   }
 
   render(){
@@ -133,7 +176,7 @@ class ProductDetails extends Component {
               <div className="row mb-2" align="right" style={{fontSize:"1.5em"}}>
                 <div className="col-6 d-flex justify-content-around" align="left">
                   <Tooltip title="Add to cart" placement="top">
-                    <AddShoppingCartIcon fontSize="large" onClick={()=>{this.props.addToCart()}}></AddShoppingCartIcon>
+                    <AddShoppingCartIcon fontSize="large" onClick={this.addToCart}></AddShoppingCartIcon>
                   </Tooltip>
                   <Tooltip title="Add to wish list" placement="top">
                     <PlaylistAddIcon fontSize="large"></PlaylistAddIcon>
@@ -159,11 +202,7 @@ class ProductDetails extends Component {
             </div>
             <div className="col-md-2 col-sm-4" style={{backgroundColor:"white"}}>
               <h2>Cart</h2>
-              <ul>
-                <li>Item 1</li>
-                <li>Item 1</li>
-                <li>Item 1</li>
-              </ul>
+              {this.cart()}
             </div>
           </div>
           :
@@ -181,9 +220,6 @@ class ProductDetails extends Component {
             ))
             :
             <p>No similar products found</p>
-          }
-          {
-            console.log(this.state.similarProducts)
           }
           </Grid>
         </div>
