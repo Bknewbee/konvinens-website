@@ -5,7 +5,7 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 
 import products from "./productItems.js";
-import Product from './product';
+import Product from './productCard';
 
 import "./productDetails.css";
 
@@ -133,7 +133,7 @@ class ProductDetails extends Component {
               <div className="row mb-2" align="right" style={{fontSize:"1.5em"}}>
                 <div className="col-6 d-flex justify-content-around" align="left">
                   <Tooltip title="Add to cart" placement="top">
-                    <AddShoppingCartIcon fontSize="large"></AddShoppingCartIcon>
+                    <AddShoppingCartIcon fontSize="large" onClick={()=>{this.props.addToCart()}}></AddShoppingCartIcon>
                   </Tooltip>
                   <Tooltip title="Add to wish list" placement="top">
                     <PlaylistAddIcon fontSize="large"></PlaylistAddIcon>

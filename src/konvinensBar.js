@@ -1,13 +1,12 @@
 import React from 'react';
 
+import Cart from './cart.js';
+
 import navLogo from './images/nav-logo.png';
 import "./konvinensBar.css";
 
 function KonvinensBar (props){
 
-  const showCart = () => {
-    console.log('show cart items');
-  }
   return(
     <div>
     <nav className="navbar navbar-expand-md navbar-light bg-light">
@@ -37,8 +36,12 @@ function KonvinensBar (props){
           {props.user
             ?
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <button className="nav-link btn" disabled onClick={showCart}>Cart</button>
+              <li className="nav-item dropdown">
+                <button className="nav-link btn dropdown-toggle" type="button" id="cartDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cart</button>
+                {/*<div className="dropdown-menu" aria-labelledby="cartDropdown">
+                  <a className="dropdown-item">sdfs</a>
+                </div>*/}
+                <Cart cart={props.cart} removeFromCart={()=>{props.removeFromCart()}}/>
               </li>
               <li className="nav-item">
                 <button className="nav-link btn" disabled>Log out</button>

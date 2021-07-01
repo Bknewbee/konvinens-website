@@ -6,7 +6,7 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 
 
-import './product.css';
+import './productCard.css';
 
 const useStyles = makeStyles({
   root:{
@@ -17,9 +17,8 @@ const useStyles = makeStyles({
   }
 })
 
-export default function Product (props) {
+function Product (props) {
   const classes = useStyles();
-
   var shortDes = props.description.substring(0,70) + "..." ;
 
   return (
@@ -56,7 +55,7 @@ export default function Product (props) {
             <div className="col-3">
 
               <Tooltip  title="Add to cart" placement="top">
-                <AddShoppingCartIcon fontSize="large"></AddShoppingCartIcon>
+                 <AddShoppingCartIcon fontSize="large" onClick={()=>{props.addToCart()}}></AddShoppingCartIcon>
               </Tooltip>
             </div>
             <div className="col-3">
@@ -90,3 +89,5 @@ export default function Product (props) {
       </Card>
   )
 }
+
+export default Product;

@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// React redux redux required files
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

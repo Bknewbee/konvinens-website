@@ -11,21 +11,55 @@ import {
 
 //import styles from './styling/...'
 import KonvinensBar from './konvinensBar.js';
-import Product from "./product.js";
+import Product from "./productCard.js";
 import UserRegistration from './forms/userRegistration';
 import LogIn from './forms/logIn';
 import ProductDetails from './productDetails.js';
 import './App.css';
 import products from "./productItems.js";
 
+
+//custom hook for localStorage
+const useStateWithLocalStorage = localStorageKey => {
+  const [value, setValue] = useState(
+    sessionStorage.getItem(localStorageKey) || ''
+  );
+  useEffect(()=>{
+    sessionStorage.setItem(localStorageKey, value);
+  },[value]);
+  return [value, setValue];
+};
+
+
 function App() {
   let [user, setUser] = useState(null);
 
   const [msg, setMsg] = useState({});
+  const [cart, setCart] = useStateWithLocalStorage(
+    'cart'
+  );
 
+  const addToCart = (product, user) => {
+    console.log(user);
+    if(user){
+      if(!cart.split('').includes(product.id)){
+        setCart(cart.concat(product.id));
+      }else(
+        alert("Product is already in cart")
+      )
+    }else {
+      alert("You need to be logged in to add to cart");
+    }
+
+  }
   const logged = () =>{
     setUser({name: "John Doe"});
   }
+
+  useEffect(()=>{
+    getuser();
+  }, []);
+
   const logOut = () => {
     setUser(null);
     setMsg({msgText: "logged out"});
@@ -55,13 +89,12 @@ function App() {
       .catch((err)=> console.log(err))
 
   }
-  useEffect(()=>{
-    getuser();
-  }, []);
+
+
   return (
     <div className="App">
       <Router>
-        <KonvinensBar user={user}/>
+        <KonvinensBar user={user} cart={cart}/>
         <Switch >
           <Route exact path="/">
             <header className="App-header">
@@ -77,7 +110,7 @@ function App() {
               <Grid container spacing={1} justify="center">
               {
                 products.map((product, i)=>{
-                  return <Grid item key={i}><Product id={product.id} img={product.img} name={product.name} owner={product.owner} description={product.description} price={product.price} promoPrice={product.promoPrice} onSale={product.onSale}></Product></Grid>
+                  return <Grid item key={i}><Product id={product.id} img={product.img} name={product.name} owner={product.owner} description={product.description} price={product.price} promoPrice={product.promoPrice} onSale={product.onSale} addToCart={()=>{addToCart(product,user)}}></Product></Grid>
                 })
               }
             </Grid>
@@ -90,7 +123,7 @@ function App() {
             <UserRegistration/>
           </Route>
           <Route path="/product/:productId">
-            <ProductDetails/>
+            <ProductDetails />
           </Route>
         </Switch>
       </Router>
