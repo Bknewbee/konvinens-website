@@ -26,7 +26,7 @@ const useStateWithLocalStorage = localStorageKey => {
   );
   useEffect(()=>{
     sessionStorage.setItem(localStorageKey, value);
-  },[value]);
+  },[value,localStorageKey]);
   return [value, setValue];
 };
 
@@ -40,7 +40,6 @@ function App() {
   );
 
   const addToCart = (product, user) => {
-    console.log(user);
     if(user){
       if(!cart.split('').includes(product.id)){
         setCart(cart.concat(product.id));
