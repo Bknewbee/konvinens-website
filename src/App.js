@@ -43,6 +43,7 @@ function App() {
     if(user){
       if(!cart.split('').includes(product.id)){
         setCart(cart.concat(product.id));
+        alert("Added to cart");
       }else(
         alert("Product is already in cart")
       )
