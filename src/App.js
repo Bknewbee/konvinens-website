@@ -61,7 +61,7 @@ function App() {
     let config = {
       withCredentials: true
     }
-    axios.get(`http://localhost:3000/api/user-logout`, config)
+    axios.get(`https://konvinens.herokuapp.com/api/user-logout`, config)
       .then((res)=> {
         setMsg(res.data.msg);
         setUser(null);
@@ -73,7 +73,7 @@ function App() {
       withCredentials: true
     }
 
-    axios.get(`http://localhost:3000/api/user`, config)
+    axios.get(`https://konvinens.herokuapp.com/api/user`, config)
       .then((res)=> {
         console.log(res);
         setUser(res.data.user);
