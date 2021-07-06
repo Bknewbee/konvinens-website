@@ -28,6 +28,11 @@ const LogIn = () => {
       .then((res)=>{
         console.log(res);
         setMsg(res.data);
+
+        setTimeout(function () {
+           // after 2 seconds
+           window.location = res.data.redirect;
+        }, 1500)
       })
       .catch((err)=>{
         console.log(err);

@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 import Cart from './cart.js';
 
@@ -6,6 +7,23 @@ import navLogo from './images/nav-logo.png';
 import "./konvinensBar.css";
 
 function KonvinensBar (props){
+
+  const logOut = () => {
+    let config = {
+      withCredentials: true
+    }
+    axios.get(`http://localhost:3000/api/user-logout`, config)
+      .then((res)=> {
+        console.log(res.data);
+        alert('logging out')
+        setTimeout(function () {
+           // after 2 seconds
+           window.location = res.data.redirect;
+        }, 500)
+        //setUser(null);
+      })
+      .catch((err)=> console.log(err))
+  }
 
   return(
     <div>
@@ -44,7 +62,7 @@ function KonvinensBar (props){
                 <Cart cart={props.cart} removeFromCart={()=>{props.removeFromCart()}}/>
               </li>
               <li className="nav-item">
-                <button className="nav-link btn" disabled>Log out</button>
+                <button className="nav-link btn" onClick={logOut}>Log out</button>
               </li>
               <li className="nav-item">
                 <button className="nav-link btn" disabled>Account</button>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Tooltip,Grid} from "@material-ui/core";
+import {Grid} from "@material-ui/core";
 import axios from 'axios';
 
 import logo from './icons8-settings.svg';
@@ -52,29 +52,21 @@ function App() {
     }
 
   }
-  const logged = () =>{
-    setUser({name: "John Doe"});
-  }
 
   useEffect(()=>{
     getuser();
   }, []);
 
   const logOut = () => {
-    setUser(null);
-    setMsg({msgText: "logged out"});
-    /*
     let config = {
       withCredentials: true
     }
-
     axios.get(`http://localhost:3000/api/user-logout`, config)
       .then((res)=> {
         setMsg(res.data.msg);
         setUser(null);
       })
       .catch((err)=> console.log(err))
-      */
   }
   const getuser = () =>{
     let config = {
@@ -102,7 +94,7 @@ function App() {
               <p>
                 Konvinens Coming soon
               </p>
-              {user ? <div><h1>Welcome <br/><i>{user.name}</i><hr/></h1><button onClick={logOut}>Log Out</button></div>:<Tooltip title="click to log in as John Doe to see changes"><button className="btn" onClick={logged}>Log in as John</button></Tooltip>}
+              {user ? <div><h1>Welcome <br/><i>{user.name}</i><hr/></h1><button onClick={logOut}>Log Out</button></div>:<a href="/log-in">Log in</a>}
               {msg ? <h1>{msg.text}</h1>:<div></div>}
             </header>
             <main style={{backgroundColor:"white", minHeight: "90vh",padding:"20px"}}>

@@ -47,7 +47,7 @@ class ProductDetails extends Component {
       if(!this.state.cart.split("").includes(this.state.productId)){
         this.setState({cart: this.state.cart.concat(this.state.productId)});
         console.log(this.state.cart);
-        //sessionStorage.setItem('cart', this.state.cart.concat(this.state.productId));
+        sessionStorage.setItem('cart', this.state.cart.concat(this.state.productId));
         alert("added to cart")
       }else{
         alert("product in cart")
@@ -92,9 +92,8 @@ class ProductDetails extends Component {
     this.setState({cart: sessionStorage.getItem('cart')},
     function (){
       console.log(this.state.cart);
-      sessionStorage.setItem('cart', this.state.cart.concat(this.state.productId));
+      sessionStorage.setItem('cart', this.state.cart);
     }
-
     );
 
 
