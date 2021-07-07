@@ -12,7 +12,7 @@ function KonvinensBar (props){
     let config = {
       withCredentials: true
     }
-    axios.get(`http://localhost:3000/api/user-logout`, config)
+    axios.get(`https://konvinens.herokuapp.com/api/user-logout`, config)
       .then((res)=> {
         console.log(res.data);
         alert('logging out')
