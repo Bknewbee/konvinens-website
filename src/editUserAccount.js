@@ -117,11 +117,10 @@ function EditUserAccount (){
       .then((res)=>{
         console.log(res.data);
         //setMsg(res.data);
-/*
         setTimeout(function () {
            // after 2 seconds
            window.location = res.data.redirect;
-        }, 1500)*/
+        }, 1500)
       })
       .catch((err)=>{
         console.log(err);
