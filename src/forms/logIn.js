@@ -13,6 +13,21 @@ const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState(null);
+  const [resend, setResend] =useState(null);
+
+  const resendEmail = () => {
+    let config = {
+      withCredentials: true
+    }
+
+    axios.post(`https://konvinens.herokuapp.com/api/user-req-email`, {email: email}, config) //
+      .then((res)=>{
+        console.log(res);
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
+  }
 
   const handleSubmit = (event) =>{
     event.preventDefault();
@@ -28,11 +43,15 @@ const LogIn = () => {
       .then((res)=>{
         console.log(res);
         setMsg(res.data);
-
-        setTimeout(function () {
-           // after 2 seconds
-           window.location = res.data.redirect;
-        }, 1500)
+        if(res.data.error){
+          setResend(res.data.resend);
+          return
+        }else{
+          setTimeout(function () {
+             // after 2 seconds
+             window.location = res.data.redirect;
+          }, 1500)
+        }
       })
       .catch((err)=>{
         console.log(err);
@@ -42,6 +61,7 @@ const LogIn = () => {
   return(
     <Paper id="logIn"elevation={5} className={classes.paperStyle}>
       {msg ? <div className={msg.param}>{msg.text}</div>:<div></div>}
+      {resend ? <button onClick={()=>{resendEmail()}} className="btn btn-primary">{resend}</button>:<p></p>}
       <Grid container className="loginStyle">
         <Grid item sm={5} xs={12} className={classes.formStyle}>
           <form onSubmit={handleSubmit}>

@@ -17,7 +17,9 @@ import LogIn from './forms/logIn';
 import ProductDetails from './productDetails.js';
 import './App.css';
 import products from "./productItems.js";
-
+import UserAccount from "./userAccount.js";
+import EditUserAccount from "./editUserAccount.js";
+import EmailConfirmation from "./emailConfirmation.js";
 
 //custom hook for localStorage
 const useStateWithLocalStorage = localStorageKey => {
@@ -61,7 +63,7 @@ function App() {
     let config = {
       withCredentials: true
     }
-    axios.get(`https://konvinens.herokuapp.com/api/user-logout`, config)
+    axios.get(`https://konvinens.herokuapp.com/api/user-logout`, config) ///api/user-logout
       .then((res)=> {
         setMsg(res.data.msg);
         setUser(null);
@@ -73,7 +75,7 @@ function App() {
       withCredentials: true
     }
 
-    axios.get(`https://konvinens.herokuapp.com/api/user`, config)
+    axios.get(`https://konvinens.herokuapp.com/api/user`, config) //
       .then((res)=> {
         console.log(res);
         setUser(res.data.user);
@@ -116,6 +118,15 @@ function App() {
           </Route>
           <Route path="/product/:productId">
             <ProductDetails />
+          </Route>
+          <Route exact path="/your-account">
+            <UserAccount />
+          </Route>
+          <Route path="/your-account/login&security">
+            <EditUserAccount />
+          </Route>
+          <Route path="/emailConfirmation/:userId/:code">
+            <EmailConfirmation/>
           </Route>
         </Switch>
       </Router>

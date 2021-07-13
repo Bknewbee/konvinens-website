@@ -64,8 +64,8 @@ function KonvinensBar (props){
               <li className="nav-item">
                 <button className="nav-link btn" onClick={logOut}>Log out</button>
               </li>
-              <li className="nav-item">
-                <button className="nav-link btn" disabled>Account</button>
+              <li className="nav-item" align="left">
+                <a href="/your-account" className="nav-link" disabled>Account</a>
               </li>
             </ul>
             :
