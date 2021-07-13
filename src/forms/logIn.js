@@ -23,6 +23,7 @@ const LogIn = () => {
     axios.post(`https://konvinens.herokuapp.com/api/user-req-email`, {email: email}, config) //
       .then((res)=>{
         console.log(res);
+        setMsg({param: "alert alert-success", text:'Email has been sent'});
       })
       .catch((err)=>{
         console.log(err);
