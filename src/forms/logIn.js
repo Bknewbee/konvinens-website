@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import {Grid, Paper, Avatar, TextField, Button} from '@material-ui/core';
 import axios from 'axios';
+import LoadingIndicator from '../loadingIndicator';
+import {trackPromise} from 'react-promise-tracker';
 
 import useStyles from '../styling/styles';
 import './logIn.css';
@@ -22,7 +24,7 @@ const LogIn = () => {
 
     axios.post(`https://konvinens.herokuapp.com/api/user-req-email`, {email: email}, config) //
       .then((res)=>{
-        console.log(res);
+        //console.log(res);
         setMsg({param: "alert alert-success", text:'Email has been sent'});
       })
       .catch((err)=>{
@@ -30,7 +32,7 @@ const LogIn = () => {
       })
   }
 
-  const handleSubmit = (event) =>{
+  const handleSubmit = async(event) =>{
     event.preventDefault();
     let formData = {
       email: email,
@@ -39,10 +41,10 @@ const LogIn = () => {
     let config = {
       withCredentials: true
     }
-
-    axios.post(`https://konvinens.herokuapp.com/api/user-login`, formData, config)
+    setMsg(null);
+    await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/user-login`, formData, config)
       .then((res)=>{
-        console.log(res);
+        //console.log(res);
         setMsg(res.data);
         if(res.data.error){
           setResend(res.data.resend);
@@ -57,12 +59,13 @@ const LogIn = () => {
       .catch((err)=>{
         console.log(err);
       })
+    )
   }
 
   return(
     <Paper id="logIn"elevation={5} className={classes.paperStyle}>
       {msg ? <div className={msg.param}>{msg.text}</div>:<div></div>}
-      {resend ? <button onClick={()=>{resendEmail()}} className="btn btn-primary">{resend}</button>:<p></p>}
+      {resend ? <button onClick={()=>{resendEmail()}} className="btn btn-primary">{resend}</button>:<LoadingIndicator/>}
       <Grid container className="loginStyle">
         <Grid item sm={5} xs={12} className={classes.formStyle}>
           <form onSubmit={handleSubmit}>
@@ -71,12 +74,11 @@ const LogIn = () => {
             <TextField required fullWidth label="E-mail" name="email" placeholder="e-mail" onChange={e => setEmail(e.target.value)} value={email}/>
             <TextField required fullWidth label="Password" name="password" type="password" placeholder="password" onChange={e => setPassword(e.target.value)} value={password}/>
 
-            <hr/>
+            <hr style={{borderBottom: "solid white 1px"}}/>
 
             <Button  type="submit" variant="contained" color="primary">
               Sign In
             </Button>
-
           </form>
           <br/>
           <div>

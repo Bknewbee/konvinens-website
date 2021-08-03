@@ -10,16 +10,26 @@ import {
 } from "react-router-dom";
 
 //import styles from './styling/...'
+//Site
+import './App.css';
 import KonvinensBar from './konvinensBar.js';
 import Product from "./productCard.js";
+import ProductDetails from './productDetails.js';
+//placement of products
+import products from "./productItems.js";
+import EmailConfirmation from "./emailConfirmation.js";
+
+//User
+import UserAccount from "./userAccount.js";
+//Services
+import StorePage from './service-pages/storePage';
+import EditStoreDetails from './service-pages/editStore';
+import ProductManagement from './service-pages/productManagement';
+//Forms
 import UserRegistration from './forms/userRegistration';
 import LogIn from './forms/logIn';
-import ProductDetails from './productDetails.js';
-import './App.css';
-import products from "./productItems.js";
-import UserAccount from "./userAccount.js";
-import EditUserAccount from "./editUserAccount.js";
-import EmailConfirmation from "./emailConfirmation.js";
+import ServiceRegistrationForm from './forms/serviceRegistrationForm';
+
 
 //custom hook for localStorage
 const useStateWithLocalStorage = localStorageKey => {
@@ -35,7 +45,7 @@ const useStateWithLocalStorage = localStorageKey => {
 
 function App() {
   let [user, setUser] = useState(null);
-
+  const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState({});
   const [cart, setCart] = useStateWithLocalStorage(
     'cart'
@@ -71,14 +81,15 @@ function App() {
       .catch((err)=> console.log(err))
   }
   const getuser = () =>{
+    setLoading(true);
     let config = {
       withCredentials: true
     }
 
     axios.get(`https://konvinens.herokuapp.com/api/user`, config) //
       .then((res)=> {
-        console.log(res);
         setUser(res.data.user);
+        setLoading(false);
       })
       .catch((err)=> console.log(err))
 
@@ -88,7 +99,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <KonvinensBar user={user} cart={cart}/>
+        <KonvinensBar user={user} cart={cart} loading={loading}/>
         <Switch >
           <Route exact path="/">
             <header className="App-header">
@@ -122,11 +133,23 @@ function App() {
           <Route exact path="/your-account">
             <UserAccount />
           </Route>
-          <Route path="/your-account/login&security">
-            <EditUserAccount />
+          <Route exact path="/your-account/login&security">
+            <EditStoreDetails/>
           </Route>
           <Route path="/emailConfirmation/:userId/:code">
             <EmailConfirmation/>
+          </Route>
+          <Route path="/service-registration">
+            <ServiceRegistrationForm/>
+          </Route>
+          <Route exact path="/store-service/:storeName">
+            <StorePage/>
+          </Route>
+          <Route path="/store-service/:storeName/edit-service-details">
+            <EditStoreDetails/>
+          </Route>
+          <Route path="/store-service/:storeName/product-management">
+            <ProductManagement/>
           </Route>
         </Switch>
       </Router>

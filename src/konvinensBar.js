@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import LoadingIndicator from './loadingIndicator';
 
 import Cart from './cart.js';
 
@@ -51,7 +52,11 @@ function KonvinensBar (props){
       </ul>
 
       <div id="navigationBar" className="collapse navbar-collapse mr-auto">
-          {props.user
+          {
+            props.loading ?
+            <LoadingIndicator/>
+            :
+            props.user
             ?
             <ul className="navbar-nav ml-auto">
               <li className="nav-item dropdown">

@@ -1,0 +1,13 @@
+#ServiceRegistrationForm{
+  background-color: white;
+  padding: 2px;
+}
+.imgPreview{
+  margin: 5px;
+  max-height: 150px;
+  height: 70%;
+  width: auto;
+}
+small{
+  color: grey;
+}
