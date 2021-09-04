@@ -35,8 +35,8 @@ function EditUserAccount (){
       .catch((err)=> console.log(err))
   }
   const editField = (field) => {
-    console.log(user.[field])
-    setValue(user.[field]);
+    console.log(user[field])
+    setValue(user[field]);
     setField(field);
   }
   const handleSubmit = async(event) => {
@@ -45,7 +45,7 @@ function EditUserAccount (){
     let formData = {
       id: user._id,
       field: field,
-      previousVal: user.[field],
+      previousVal: user[field],
       value: value,
     }
     let config = {
@@ -94,7 +94,7 @@ function EditUserAccount (){
               </div>
               <form onSubmit={handleSubmit} className="modal-body">
                 <p>New {field}</p>
-                <input value={value} onChange={e => setValue(e.target.value)} name={user.[field]}></input>
+                <input value={value} onChange={e => setValue(e.target.value)} name={user[field]}></input>
                 <div className="modal-footer d-flex justify-content-end">
                   <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                   <button type="submit" className="btn btn-primary" >Save changes</button>
