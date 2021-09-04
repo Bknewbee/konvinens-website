@@ -219,8 +219,7 @@ function HorizontalLinearStepper() {
       let findItems = [];
 
       itemsArray.forEach((item, i) => {
-        findItems[i] = item.split('-').[0]
-
+        findItems[i] = item.split('-')[0]
         return findItems
       });
 
