@@ -1,0 +1,7 @@
+#Cart .row{
+  height: 80px;
+}
+#Checkout{
+  background-color: white;
+  min-height: 100vh;
+}

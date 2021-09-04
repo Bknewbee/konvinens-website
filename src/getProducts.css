@@ -1,0 +1,6 @@
+
+/*<Product  id={product._id} img={"data:"+product.image.contentType+";base64,"+product.image.imgBuffer} name={product.title} owner={product.owner} description={product.description} price={product.price} promoPrice={product.promoPrice} onSale={product.onSale}/>*/
+.scrolling-wrapper{
+	overflow-x: auto;
+	height: 370px;
+}

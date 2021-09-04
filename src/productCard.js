@@ -2,8 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Card,CardActionArea,CardContent,CardMedia,Typography,Tooltip} from '@material-ui/core';
 
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 
 
 import './productCard.css';
@@ -16,12 +14,47 @@ const useStyles = makeStyles({
     height: 150,
   }
 })
+/*
+const useStateWithLocalStorage = localStorageKey => {
+  const [value, setValue] = useState(
+    sessionStorage.getItem(localStorageKey) || ''
+  );
+  useEffect(()=>{
+    sessionStorage.setItem(localStorageKey, value);
+  },[value,localStorageKey]);
+  return [value, setValue];
+};
+*/
 
-function Product (props) {
+
+
+const Product = (props, add) => {
   const classes = useStyles();
-  var shortDes = props.description.substring(0,70) + "..." ;
+/*
+  const [cart, setCart] = useStateWithLocalStorage(
+    'cart'
+  );
+*/
 
+/*
+
+  const addToCart = () => {
+
+      if(cart.includes(props.id)){
+        alert("Product is already in cart")
+        //alert("Added to cart");
+      }else(
+        //alert("Product is already in cart")
+        setCart(cart.concat(props.id+"-"+props.name+","))
+      )
+  }
+  useEffect(()=>{
+    sessionStorage.setItem('cart', cart.concat(props.id+"-"+props.name+","))
+  })
+*/
+  var shortDes = props.description.substring(0,70) + "..." ;
   return (
+      /*
       <Card
         className={classes.root}
         id="Product"
@@ -49,23 +82,13 @@ function Product (props) {
               shortDes :
               props.description
             }
+
           </Typography>
           <hr/>
           <Typography component="div" className="row">
-            <div className="col-3">
-
-              <Tooltip  title="Add to cart" placement="top">
-                 <AddShoppingCartIcon fontSize="large" onClick={()=>{props.addToCart()}}></AddShoppingCartIcon>
-              </Tooltip>
-            </div>
-            <div className="col-3">
-              <Tooltip title="Add to wish list" placement="top">
-                <PlaylistAddIcon fontSize="large"></PlaylistAddIcon>
-              </Tooltip>
-            </div>
             {
               props.onSale ?
-              <div className="col-6">
+              <div className="col-12" align="left">
                 <div className="col">
                 <Tooltip title="Was" placement="top" style={{color: "red", textDecoration:"line-through"}}>
                   <div>P{props.price}</div>
@@ -87,6 +110,26 @@ function Product (props) {
           </Typography>
         </CardContent>
       </Card>
+      */
+      <div id="Product" className="card border-dark card-block card-1 text-left">
+        <div className="card-header">
+          <img class="card-img-top" src={props.img} alt="Card image cap"/>
+        </div>
+        <div className="card-body">
+          <p><small>Sold by: </small>{props.owner}</p>
+          <a href={"/product/"+props.id}><h5 className="card-title"> {props.name}</h5></a>
+          <p className="card-text">
+            {
+              props.description.length > 70 ?
+              shortDes :
+              props.description
+            }
+          </p>
+        </div>
+        <div className="card-footer text-right ">
+          <p>P {props.price}</p>
+        </div>
+      </div>
   )
 }
 

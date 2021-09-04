@@ -1,10 +1,13 @@
 import React,{Component} from 'react';
+import axios from 'axios';
 import {withRouter} from 'react-router-dom';
 import {Tooltip,Grid} from '@material-ui/core';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
+import {trackPromise} from 'react-promise-tracker';
 
-import products from "./productItems.js";
+import LoadingIndicator from './loadingIndicator';
+//import products from "./productItems.js";
 import Product from './productCard';
 
 import "./productDetails.css";
@@ -28,7 +31,7 @@ class ProductDetails extends Component {
     this.addToCart = this.addToCart.bind(this);
   }
   increment(){
-      if(this.state.purchaseQuantity === this.state.product.stock){
+      if(this.state.purchaseQuantity === this.state.product.qty){
         alert("Only "+this.state.product.stock+" available");
       }else{
         this.setState({purchaseQuantity: this.state.purchaseQuantity + 1})
@@ -44,10 +47,10 @@ class ProductDetails extends Component {
   }
   addToCart(){
       console.log(this.state.cart);
-      if(!this.state.cart.split("").includes(this.state.productId)){
-        this.setState({cart: this.state.cart.concat(this.state.productId)});
+      if(!this.state.cart.includes(this.state.productId)){
+        this.setState({cart: this.state.cart.concat(this.state.productId+"-"+this.state.product.title+"-"+this.state.purchaseQuantity+",")});
         console.log(this.state.cart);
-        sessionStorage.setItem('cart', this.state.cart.concat(this.state.productId));
+        sessionStorage.setItem('cart', this.state.cart.concat(this.state.productId+"-"+this.state.product.title+"-"+this.state.purchaseQuantity+","));
         alert("added to cart")
       }else{
         alert("product in cart")
@@ -57,27 +60,33 @@ class ProductDetails extends Component {
   cart(){
     return  <ul className="list-group">
               {
+                window.sessionStorage.cart ?
                 window.sessionStorage.cart.length > 0 ?
-
-                window.sessionStorage.cart.split('').map((productCart, i)=>(
+                //console.log(window.sessionStorage.cart.split(',')[0])
+                window.sessionStorage.cart.split(',').map((productCart, i)=>(
+                  /*
                   products.map((product,i)=>(
                     productCart === product.id ?
-                    <li className="list-group-item" key={i}>{product.name}</li>
+
                     :
                     null
                   ))
-                ))
+                ))*/
+                <li className="list-group-item" key={i}>{productCart.split('-')[1]}</li>
+              ))
                 :
                 <p>No items in cart</p>
+                :
+                <p>No cart</p>
               }
             </ul>
   }
   changeQuantity(event){
     console.log(event.target.name);
     if(event.target.name === "directEditQuantity"){
-      console.log(this.state.product.stock+" / " +event.target.value);
-      if(event.target.value > this.state.product.stock){
-        alert("Only "+this.state.product.stock+" available");
+      console.log(this.state.product.qty+" / " +event.target.value);
+      if(event.target.value > this.state.product.qty){
+        alert("Only "+this.state.product.qty+" available");
         this.setState({purchaseQuantity: 1})
       }else if(event.target.value < 0){
         alert("Remove product from cart");
@@ -87,17 +96,35 @@ class ProductDetails extends Component {
       }
     }
   }
-  componentDidMount(){
+  async componentDidMount(){
     //console.log(this.props.match.params.productId);
+    let config = {
+      withCredentials: true
+    }
+
+    await trackPromise(axios.post(`/api/product`,{"id": this.props.match.params.productId}, config)
+      .then((res)=>{
+        console.log(res.data.product);
+        this.setState({product: res.data.product},
+          function(){
+            this.setState({productId: this.props.match.params.productId});
+          }
+        );
+
+      })
+      .catch((err)=>{
+        console.error(err);
+      })
+    )
+    if(!sessionStorage.getItem('cart')){
+      sessionStorage.setItem('cart', '');
+    }
     this.setState({cart: sessionStorage.getItem('cart')},
     function (){
-      console.log(this.state.cart);
       sessionStorage.setItem('cart', this.state.cart);
     }
     );
-
-
-
+    /*
     var joined = this.state.similarProducts;
     this.setState({productId: this.props.match.params.productId});
     const found = products.find(({id}) => id === this.props.match.params.productId)
@@ -129,6 +156,7 @@ class ProductDetails extends Component {
     }else{
       this.setState({msg: {text:"Product not found"}})
     }
+    */
     //console.log(found);
     /*products.map((product)=>{
       if(product.id === this.props.match.params.productId){
@@ -142,18 +170,18 @@ class ProductDetails extends Component {
 
   render(){
     return(
-      <div className="app-body">
+      <div id="ProductDetails" className="app-body">
         {
           this.state.product ?
           <div className="row" style={{minHeight: "90vh", margin:"0px"}}>
             <div className="col-md-5 col-sm-12" style={{backgroundColor:"white", padding:"0px",margin:"0px",height:"100%"}}>
-              <img src={this.state.product.img} className="img-fluid" alt="product"></img>
+              <img src={"data:"+this.state.product.image.contentType+";base64,"+this.state.product.image.imgBuffer} className="img-fluid" alt="product"></img>
             </div>
             <div className="col-md-5 col-sm-8" style={{backgroundColor:"white", textAlign:"left"}}>
               <p>{this.state.msg.text}</p>
-              <h2>{this.state.product.name}</h2>
+              <h2>{this.state.product.title}</h2>
               <p>{this.state.product.description}</p>
-              <div><button className="btn">Instock : {this.state.product.stock}</button>{this.state.product.onSale ? <button className="btn btn-success">{this.state.product.promoPrice}% OFF</button>: ""}</div>
+              <div><button className="btn">Instock : {this.state.product.qty}</button>{this.state.product.onSale ? <button className="btn btn-success">{this.state.product.promoPrice}% OFF</button>: ""}</div>
 
               <div className="row">
                 <div className="col" style={{fontSize:"1.2em"}}>
@@ -190,6 +218,7 @@ class ProductDetails extends Component {
                   }
                 </div>
               </div>
+              {/*
               <div style={{border:"solid black 1px", padding:"0px 2px"}}> Categories : {
                   this.state.product.category.length > 0 ?
                   this.state.product.category.map((cat, i)=>(
@@ -198,14 +227,16 @@ class ProductDetails extends Component {
                   :
                   <button>none</button>
                 }</div>
+                */}
             </div>
+
             <div className="col-md-2 col-sm-4" style={{backgroundColor:"white"}}>
               <h2>Cart</h2>
               {this.cart()}
             </div>
           </div>
           :
-          <div style={{minHeight: "40vh"}}><h2>{this.state.msg.text}</h2></div>
+          <div style={{minHeight: "40vh"}}><h2>{this.state.msg.text}</h2><LoadingIndicator/></div>
         }
         <hr/>
         <div style={{backgroundColor:"white"}}>

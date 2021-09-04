@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Grid} from "@material-ui/core";
+//import {Grid} from "@material-ui/core";
 import axios from 'axios';
 
 import logo from './icons8-settings.svg';
@@ -13,10 +13,10 @@ import {
 //Site
 import './App.css';
 import KonvinensBar from './konvinensBar.js';
-import Product from "./productCard.js";
+//import Product from "./productCard.js";
 import ProductDetails from './productDetails.js';
-//placement of products
-import products from "./productItems.js";
+import Checkout from "./checkout";
+import GetProducts from "./getProducts";
 import EmailConfirmation from "./emailConfirmation.js";
 
 //User
@@ -32,6 +32,7 @@ import ServiceRegistrationForm from './forms/serviceRegistrationForm';
 
 
 //custom hook for localStorage
+/*
 const useStateWithLocalStorage = localStorageKey => {
   const [value, setValue] = useState(
     sessionStorage.getItem(localStorageKey) || ''
@@ -41,29 +42,13 @@ const useStateWithLocalStorage = localStorageKey => {
   },[value,localStorageKey]);
   return [value, setValue];
 };
-
+*/
 
 function App() {
   let [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState({});
-  const [cart, setCart] = useStateWithLocalStorage(
-    'cart'
-  );
 
-  const addToCart = (product, user) => {
-    if(user){
-      if(!cart.split('').includes(product.id)){
-        setCart(cart.concat(product.id));
-        alert("Added to cart");
-      }else(
-        alert("Product is already in cart")
-      )
-    }else {
-      alert("You need to be logged in to add to cart");
-    }
-
-  }
 
   useEffect(()=>{
     getuser();
@@ -99,7 +84,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <KonvinensBar user={user} cart={cart} loading={loading}/>
+        <KonvinensBar user={user} loading={loading}/>
         <Switch >
           <Route exact path="/">
             <header className="App-header">
@@ -111,14 +96,8 @@ function App() {
               {msg ? <h1>{msg.text}</h1>:<div></div>}
             </header>
             <main style={{backgroundColor:"white", minHeight: "90vh",padding:"20px"}}>
-              <h1><u>Product info sample</u></h1>
-              <Grid container spacing={1} justify="center">
-              {
-                products.map((product, i)=>{
-                  return <Grid item key={i}><Product id={product.id} img={product.img} name={product.name} owner={product.owner} description={product.description} price={product.price} promoPrice={product.promoPrice} onSale={product.onSale} addToCart={()=>{addToCart(product,user)}}></Product></Grid>
-                })
-              }
-            </Grid>
+              <GetProducts />
+
             </main>
           </Route>
           <Route path="/log-in">
@@ -150,6 +129,9 @@ function App() {
           </Route>
           <Route path="/store-service/:storeName/product-management">
             <ProductManagement/>
+          </Route>
+          <Route path="/checkout">
+            <Checkout/>
           </Route>
         </Switch>
       </Router>

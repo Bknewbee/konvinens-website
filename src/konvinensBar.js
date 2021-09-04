@@ -2,12 +2,16 @@ import React from 'react';
 import axios from 'axios';
 import LoadingIndicator from './loadingIndicator';
 
-import Cart from './cart.js';
-
 import navLogo from './images/nav-logo.png';
 import "./konvinensBar.css";
+import Cart from "./cart.js" ;
+
+
+
 
 function KonvinensBar (props){
+
+
 
   const logOut = () => {
     let config = {
@@ -64,7 +68,7 @@ function KonvinensBar (props){
                 {/*<div className="dropdown-menu" aria-labelledby="cartDropdown">
                   <a className="dropdown-item">sdfs</a>
                 </div>*/}
-                <Cart cart={props.cart} removeFromCart={()=>{props.removeFromCart()}}/>
+                <Cart/>
               </li>
               <li className="nav-item">
                 <button className="nav-link btn" onClick={logOut}>Log out</button>
