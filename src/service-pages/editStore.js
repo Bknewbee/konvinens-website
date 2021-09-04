@@ -68,7 +68,7 @@ function EditStoreDetails (props){
     if(type === "file"){
       setValue("");
     }else{
-      setValue(service.[field]);
+      setValue(service[field]);
       setFile(null);
     }
     setType(type);
@@ -86,7 +86,7 @@ function EditStoreDetails (props){
 
       formData.append('id', service._id);
       formData.append('field', field);
-      formData.append('previousVal', service.[field]);
+      formData.append('previousVal', service[field]);
 
       let config = {
         withCredentials: true
@@ -192,7 +192,7 @@ function EditStoreDetails (props){
                   </div>
                   <form onSubmit={handleSubmit} className="modal-body">
                     <p>New {field}</p>
-                    <input value={value} type={type} onChange={e => { type === "file" ? setFile(URL.createObjectURL(e.target.files[0])) : setValue(e.target.value)}} name={service.[field]}></input>
+                    <input value={value} type={type} onChange={e => { type === "file" ? setFile(URL.createObjectURL(e.target.files[0])) : setValue(e.target.value)}} name={service[field]}></input>
 
                     <div className="modal-footer d-flex justify-content-end">
                       <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
