@@ -52,7 +52,7 @@ const Product = (props, add) => {
     sessionStorage.setItem('cart', cart.concat(props.id+"-"+props.name+","))
   })
 */
-  var shortDes = props.description.substring(0,70) + "..." ;
+  var shortDes = props.description.substring(0,20) + "..." ;
   return (
       /*
       <Card
@@ -120,7 +120,7 @@ const Product = (props, add) => {
           <a href={"/product/"+props.id}><h5 className="card-title"> {props.name}</h5></a>
           <p className="card-text">
             {
-              props.description.length > 70 ?
+              props.description.length > 20 ?
               shortDes :
               props.description
             }
