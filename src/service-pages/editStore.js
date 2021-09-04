@@ -116,7 +116,7 @@ function EditStoreDetails (props){
         let formData = {
           id: service._id,
           field: field,
-          previousVal: service.[field],
+          previousVal: service[field],
           value: value,
         }
 
