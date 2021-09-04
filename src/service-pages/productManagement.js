@@ -158,10 +158,13 @@ function ProductManagement (props){
   useEffect(()=>{
     const getProducts = async() => {
       let config = {
-        withCredentials: true
+        withCredentials: true,
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
       }
       //setUser({name: "Ben", email:"@asdfasdsdf", phoneNumber: "75214847", serviceProvider: false, confirmation: false})
-      await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/get-products`,{storeName:props.match.params.storeName}, config)
+      await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/get-products`,{storeName:props.match.params.storeName},config)
         .then((res)=> {
           if(res.data.user){
             if(res.data.products.length === 0){
