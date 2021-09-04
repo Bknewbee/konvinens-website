@@ -1,11 +1,11 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import {Card,CardActionArea,CardContent,CardMedia,Typography,Tooltip} from '@material-ui/core';
+//import { makeStyles } from '@material-ui/core/styles';
+//import {Card,CardActionArea,CardContent,CardMedia,Typography,Tooltip} from '@material-ui/core';
 
 
 
 import './productCard.css';
-
+/*
 const useStyles = makeStyles({
   root:{
     transition: "transform 0.15s ease-in-out"
@@ -29,7 +29,7 @@ const useStateWithLocalStorage = localStorageKey => {
 
 
 const Product = (props, add) => {
-  const classes = useStyles();
+  //const classes = useStyles();
 /*
   const [cart, setCart] = useStateWithLocalStorage(
     'cart'
@@ -113,7 +113,7 @@ const Product = (props, add) => {
       */
       <div id="Product" className="card border-dark card-block card-1 text-left">
         <div className="card-header">
-          <img class="card-img-top" src={props.img} alt="Card image cap"/>
+          <img className="card-img-top" src={props.img} alt="Card cap"/>
         </div>
         <div className="card-body">
           <p><small>Sold by: </small>{props.owner}</p>
