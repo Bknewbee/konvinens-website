@@ -19,6 +19,7 @@
 	background-size: cover;
 	transition: all 0.2s ease-in-out !important;
 	border-radius: 10px;
+  height: 350px;
 }
 #Product.card-block:hover{
   transform: translateY(-5px);

@@ -85,7 +85,7 @@ function ProductManagement (props){
       headers: {
         'content-type': 'multipart/form-data'
       }
-      }
+    }
 
     //console.log(formData.entries());
     let newProduct = {}
