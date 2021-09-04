@@ -93,7 +93,7 @@ class ServiceRegistrationForm extends Component{
           images: {
             ...this.state.images,
             [name]:{
-              ...this.state.images.[name],
+              ...this.state.images[name],
                value
              }
            }
@@ -105,7 +105,7 @@ class ServiceRegistrationForm extends Component{
           images: {
             ...this.state.images,
             [name]:{
-              ...this.state.images.[name],
+              ...this.state.images[name],
                value
              }
            }
