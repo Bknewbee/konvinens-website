@@ -81,6 +81,9 @@ const LogIn = () => {
             </Button>
           </form>
           <br/>
+            <div>
+              <a href="/reset">forgot password or email</a>
+            </div>
           <div>
             <p>Dont have an account go on and </p>
             <a href="/user-registration">Create an Account</a>

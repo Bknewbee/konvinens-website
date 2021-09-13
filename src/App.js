@@ -29,7 +29,7 @@ import ProductManagement from './service-pages/productManagement';
 import UserRegistration from './forms/userRegistration';
 import LogIn from './forms/logIn';
 import ServiceRegistrationForm from './forms/serviceRegistrationForm';
-
+import Reset from './forms/reset';
 
 //custom hook for localStorage
 /*
@@ -132,6 +132,9 @@ function App() {
           </Route>
           <Route path="/checkout">
             <Checkout/>
+          </Route>
+          <Route path="/reset">
+            <Reset/>
           </Route>
         </Switch>
       </Router>
