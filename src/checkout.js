@@ -1121,7 +1121,7 @@ function HorizontalNonLinearStepper() {
       });
 
 
-      await trackPromise(axios.post(`/api/get-items`, findItems, config)
+      await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/get-items`, findItems, config)
         .then((res)=> {
           //console.log(res.data.user);
           res.data.products.map((item)=>{
