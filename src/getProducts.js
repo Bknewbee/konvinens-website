@@ -22,7 +22,7 @@ function GetProducts(){
       withCredentials: true
     }
 
-    await trackPromise(axios.get(`/api/products`, config)
+    await trackPromise(axios.get(`https://konvinens.herokuapp.com/api/products`, config)
       .then((res)=>{
         console.log(res.data);
         setProducts(res.data.products);
