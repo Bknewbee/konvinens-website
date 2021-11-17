@@ -453,7 +453,6 @@ function HorizontalNonLinearStepper() {
     let totalProducts = 0;
 
     const increment = (val) => {
-
       let cartItems = sessionStorage.getItem('cart').split(',');
 
       let cartItem = sessionStorage.getItem('cart').split(',')[val].split("-")
@@ -470,7 +469,6 @@ function HorizontalNonLinearStepper() {
         return;
       }else{
         cartItem[2] = x+=1;
-        console.log("X="+x);
         cartItems.splice(val, 0, cartItem.join("-"));
 
         sessionStorage.setItem('cart', cartItems.join(","))
@@ -478,15 +476,14 @@ function HorizontalNonLinearStepper() {
 
       let y = parseInt(items[val].purchaseQty);
 
-      if(y===10){
-        console.log(items[val]);
+      if(y===items[val].qty){
+        console.log("There are only "+items[val].qty+" available");
+        return
       }else{
         y+=1;
-        console.log("Y="+y);
         let newItems = items;
         newItems[val].purchaseQty = y;
 
-        console.log(cartItems);
         setItems(newItems);
         setRefresh(!refresh);
       }
@@ -512,7 +509,6 @@ function HorizontalNonLinearStepper() {
         return
       }else{
         cartItem[2] = x-=1;
-        console.log("X="+x);
         cartItems.splice(val, 0, cartItem.join("-"));
         sessionStorage.setItem('cart', cartItems.join(","))
       }
@@ -523,11 +519,8 @@ function HorizontalNonLinearStepper() {
         console.log("click the remove button to remove product from cart");
       }else{
         y-=1;
-        console.log("Y="+y);
         let newItems = items;
         newItems[val].purchaseQty = y;
-
-        console.log(cartItems);
         setItems(newItems);
         setRefresh(!refresh);
       }
@@ -683,6 +676,7 @@ function HorizontalNonLinearStepper() {
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     {item.description}
+                    <p>Instock: {item.qty}</p>
                   </Grid>
                   <Grid item xs={12}>
                     Remove
@@ -1120,10 +1114,10 @@ function HorizontalNonLinearStepper() {
         return findItems
       });
 
+      console.log(findItems);
 
-      await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/get-items`, findItems, config)
+      await trackPromise(axios.post(`/api/get-items`, findItems, config)
         .then((res)=> {
-          //console.log(res.data.user);
           res.data.products.map((item)=>{
             itemsArray.map((itema)=>{
               if(itema.split('-')[0] === item._id){
@@ -1133,7 +1127,21 @@ function HorizontalNonLinearStepper() {
             })
             return true
           })
-          setItems(res.data.products)
+
+          let result = [];
+          findItems.forEach(function(key){
+            var found = false;
+            let products = res.data.products.filter(function(product){
+              if(product._id === key){
+                result.push(product);
+                found = true;
+                return false;
+              }else{
+                return true;
+              }
+            })
+          })
+          setItems(result)
         })
         .catch((err)=> console.log(err))
       )
