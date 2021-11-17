@@ -102,7 +102,7 @@ class ProductDetails extends Component {
       withCredentials: true
     }
 
-    await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/product`,{"id": this.props.match.params.productId}, config)
+    await trackPromise(axios.post(`/api/product`,{"id": this.props.match.params.productId}, config)
       .then((res)=>{
         console.log(res.data.product);
         this.setState({product: res.data.product},

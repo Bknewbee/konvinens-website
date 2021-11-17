@@ -22,7 +22,7 @@ const LogIn = () => {
       withCredentials: true
     }
 
-    axios.post(`https://konvinens.herokuapp.com/api/user-req-email`, {email: email}, config) //
+    axios.post(`/api/user-req-email`, {email: email}, config) //
       .then((res)=>{
         //console.log(res);
         setMsg({param: "alert alert-success", text:'Email has been sent'});
@@ -42,7 +42,7 @@ const LogIn = () => {
       withCredentials: true
     }
     setMsg(null);
-    await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/user-login`, formData, config)
+    await trackPromise(axios.post(`/api/user-login`, formData, config)
       .then((res)=>{
         //console.log(res);
         setMsg(res.data);

@@ -1,7 +1,19 @@
 #Cart .row{
   height: 80px;
 }
+#Cart .figure{
+  max-width: 200px;
+  margin: 0;
+  padding: 0;
+}
+#Cart .row.item{
+  height: 480px;
+  background-color: grey;
+}
 #Checkout{
   background-color: white;
   min-height: 100vh;
+}
+#Checkout .title{
+  font-weight: bold;
 }

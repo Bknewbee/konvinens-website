@@ -8,6 +8,7 @@ import {trackPromise} from 'react-promise-tracker';
 
 
 import './reset.css';
+//reset password
 /*
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -194,7 +195,7 @@ function Reset (){
       withCredentials: true
     }
     setMsg(null);
-    await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/password-reset`, data, config)
+    await trackPromise(axios.post(`/api/password-reset`, data, config)
       .then((res)=>{
         console.log(res.data);
         setMsg(res.data.msg);
@@ -216,7 +217,7 @@ function Reset (){
       withCredentials: true
     }
 
-    await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/user-reset`, {email: email}, config)
+    await trackPromise(axios.post(`/api/user-reset`, {email: email}, config)
       .then((res)=>{
         console.log(res.data);
 

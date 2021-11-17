@@ -22,7 +22,7 @@ function GetProducts(){
       withCredentials: true
     }
 
-    await trackPromise(axios.get(`https://konvinens.herokuapp.com/api/products`, config)
+    await trackPromise(axios.get(`/api/products`, config)
       .then((res)=>{
         console.log(res.data);
         setProducts(res.data.products);
@@ -41,7 +41,7 @@ function GetProducts(){
           <LoadingIndicator/>
           :
           products.map((product,i)=>(
-            <div key={i} className="col-sm-5">
+            <div key={i} className="col-sm-auto ">
               <Product id={product._id} img={"data:"+product.image.contentType+";base64,"+product.image.imgBuffer} name={product.title} owner={product.owner} description={product.description} price={product.price} promoPrice={product.promoPrice} onSale={product.onSale}/>
             </div>
           ))
