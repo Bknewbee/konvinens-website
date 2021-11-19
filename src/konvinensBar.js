@@ -4,7 +4,7 @@ import LoadingIndicator from './loadingIndicator';
 
 import navLogo from './images/nav-logo.png';
 import "./konvinensBar.css";
-import Cart from "./cart.js" ;
+//import Cart from "./cart.js" ;
 
 
 
@@ -64,11 +64,14 @@ function KonvinensBar (props){
             ?
             <ul className="navbar-nav ml-auto">
               <li className="nav-item dropdown">
+                <a className="nav-link" href="/checkout">Cart</a>
+                {/*
                 <button className="nav-link btn dropdown-toggle" type="button" id="cartDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cart</button>
-                {/*<div className="dropdown-menu" aria-labelledby="cartDropdown">
+                <div className="dropdown-menu" aria-labelledby="cartDropdown">
                   <a className="dropdown-item">sdfs</a>
-                </div>*/}
+                </div>
                 <Cart/>
+                */}
               </li>
               <li className="nav-item">
                 <button className="nav-link btn" onClick={logOut}>Log out</button>
