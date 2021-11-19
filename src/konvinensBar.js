@@ -63,7 +63,7 @@ function KonvinensBar (props){
             props.user
             ?
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item dropdown">
+              <li className="nav-item dropdown" align="left">
                 <a className="nav-link" href="/checkout">Cart</a>
                 {/*
                 <button className="nav-link btn dropdown-toggle" type="button" id="cartDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cart</button>
@@ -73,11 +73,11 @@ function KonvinensBar (props){
                 <Cart/>
                 */}
               </li>
-              <li className="nav-item">
-                <button className="nav-link btn" onClick={logOut}>Log out</button>
-              </li>
               <li className="nav-item" align="left">
                 <a href="/your-account" className="nav-link" disabled>Account</a>
+              </li>
+              <li className="nav-item">
+                <button className="nav-link btn" onClick={logOut}>Log out</button>
               </li>
             </ul>
             :
