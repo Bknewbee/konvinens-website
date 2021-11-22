@@ -82,6 +82,9 @@ function ProductManagement (props){
 
     let config = {
       withCredentials: true,
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
     }
 
     //console.log(formData.entries());
@@ -133,9 +136,6 @@ function ProductManagement (props){
 
     let config = {
       withCredentials: true,
-      headers: {
-        'content-type': 'multipart/form-data'
-      }
     }
 
     //console.log(event.target);
@@ -156,9 +156,6 @@ function ProductManagement (props){
     const getProducts = async() => {
       let config = {
         withCredentials: true,
-        headers: {
-          'content-type': 'multipart/form-data'
-        }
       }
       //setUser({name: "Ben", email:"@asdfasdsdf", phoneNumber: "75214847", serviceProvider: false, confirmation: false})
       await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/get-products`,{storeName:props.match.params.storeName},config)
