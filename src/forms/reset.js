@@ -195,7 +195,7 @@ function Reset (){
       withCredentials: true
     }
     setMsg(null);
-    await trackPromise(axios.post(`/api/password-reset`, data, config)
+    await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/password-reset`, data, config)
       .then((res)=>{
         console.log(res.data);
         setMsg(res.data.msg);
