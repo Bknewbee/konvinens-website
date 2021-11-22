@@ -217,7 +217,7 @@ function Reset (){
       withCredentials: true
     }
 
-    await trackPromise(axios.post(`/api/user-reset`, {email: email}, config)
+    await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/user-reset`, {email: email}, config)
       .then((res)=>{
         console.log(res.data);
 
