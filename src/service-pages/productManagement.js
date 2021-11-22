@@ -82,9 +82,6 @@ function ProductManagement (props){
 
     let config = {
       withCredentials: true,
-      headers: {
-        'content-type': 'multipart/form-data'
-      }
     }
 
     //console.log(formData.entries());
