@@ -68,12 +68,17 @@ function ProductManagement (props){
   const [products, setProducts] = React.useState([]);
   const [msgs, setMsgs] = React.useState(null);
   const [img, setImg] = React.useState(null);
+  const [refresh, setRefresh] = React.useState(false);
 
+  const [addProducts, setAddProducts] =  React.useState([]);
+  const [images, setImages] =  React.useState([]);
+  //const [user, setUser] = React.useState({name: "Ezer Bhuka", email:"@asdfasdsdf", phoneNumber: "75214847", serviceProvider: false, confirmation: false})
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+/*
   const handleSubmit = async(event) => {
     event.preventDefault();
 
@@ -103,7 +108,7 @@ function ProductManagement (props){
       //setMsgs(null);
       //document.getElementById("product-form").reset();
       //setImg(null);
-      await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/product-add`, formData,config)
+      await trackPromise(axios.post(`/api/product-add`, formData,config)
         .then((res)=>{
           //console.log(res.data);
           setMsgs({msg:res.data.msg});
@@ -126,6 +131,113 @@ function ProductManagement (props){
     }
 
     //console.log(document.getElementById("add-product").modal("hide"));
+  }
+*/
+  const handleSubmit = async() =>{
+    const formData = new FormData();
+    const products = addProducts;
+    console.log(images)
+
+    formData.append("products", JSON.stringify(products))
+    formData.append("owner", props.match.params.storeName)
+    //formData.append("images", JSON.stringify(images));
+
+    for (var i = 0; i < products.length; i++){
+      //formData.append('products[]', products[i])
+      formData.append('images[]',images[i])
+    }
+
+    for (var pair of formData.entries()) {
+      console.log(pair[0]+ ', ' + pair[1]);
+    }
+
+    let config = {
+      withCredentials: true,
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    }
+
+    if(addProducts.length > 0){
+      await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/product-add`,formData,config)
+        .then((res)=>{
+          //console.log(res.data);
+          if(res.data.errors){
+            setMsgs({msg:res.data.msg});
+          }else{
+            setMsgs({msg:res.data.msg});
+
+            setTimeout(function () {
+               // after 2 seconds
+               window.location = res.data.redirect;
+            }, 2000)
+          }
+
+        })
+        .catch((err)=>{
+          console.error(err);
+        })
+      )
+    }
+
+  }
+
+  const addToProductList = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+
+    let newProduct={};
+
+    for (var pair of formData.entries()) {
+      console.log(pair[0]+ ', ' + pair[1]);
+      newProduct[pair[0]] = pair[1];
+      if(pair[0]==="img"){
+        images.push(pair[1])
+      }
+    }
+
+    if(parseFloat(newProduct.price)){
+
+
+
+      newProduct.price = parseFloat(newProduct.price).toFixed(2);
+      newProduct.img = img;
+
+      addProducts.push(newProduct);
+
+      setMsgs({msg:{param: "alert alert-warning", text:"Adding product"}})
+
+      setTimeout(function(){
+        setMsgs(null);
+        document.getElementById("product-form").reset();
+        setImg(null);
+      }, 1500)
+
+    }else{
+      setMsgs({msg:{param: "alert alert-warning", text:"please make sure price is a number"}})
+      return
+    }
+
+
+
+
+
+
+
+  }
+
+  const remove = (index, title) =>{
+
+    const array = addProducts;
+
+    const removeIndex = array.map(function(item){return item.title}).indexOf(title);
+
+    array.splice(removeIndex, 1);
+
+
+    setAddProducts(array);
+    setRefresh(!refresh);
+
   }
 
   const saveProducts = async(event) =>{
@@ -152,12 +264,12 @@ function ProductManagement (props){
     )
   }
 
+
   useEffect(()=>{
     const getProducts = async() => {
       let config = {
         withCredentials: true,
       }
-      //setUser({name: "Ben", email:"@asdfasdsdf", phoneNumber: "75214847", serviceProvider: false, confirmation: false})
       await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/get-products`,{storeName:props.match.params.storeName},config)
         .then((res)=> {
           if(res.data.user){
@@ -170,7 +282,6 @@ function ProductManagement (props){
             }else{
               setProducts(res.data.products);
             }
-
           }else {
             setMsgs({msg:res.data.msg})
             setTimeout(function () {
@@ -207,8 +318,9 @@ function ProductManagement (props){
             <TableHead>
               <TableRow >
                 <TableCell align="left">No.</TableCell>
-                <TableCell>Title</TableCell>
                 <TableCell>Image</TableCell>
+                <TableCell>Title</TableCell>
+
                 <TableCell align="right">Description</TableCell>
                 <TableCell align="right">Category</TableCell>
                 <TableCell align="right">Quantity</TableCell>
@@ -221,10 +333,10 @@ function ProductManagement (props){
                       //console.log(products),
                     <TableRow key={i}>
                       <TableCell>{i+1}</TableCell>
+                      <TableCell><img src={"data:"+product.image.contentType+";base64,"+product.image.imgBuffer} className="img-fluid" alt="product" style={{width: "50px"}}></img></TableCell>
                       <TableCell component="th" scope="row">
                         {product.title}
                       </TableCell>
-                      <TableCell>img</TableCell>
                       <TableCell align="left">{product.description}</TableCell>
                       <TableCell align="right">{product.category}</TableCell>
                       <TableCell align="right">{product.qty}</TableCell>
@@ -242,14 +354,15 @@ function ProductManagement (props){
       </TabPanel>
       <TabPanel value={value} index={1} component="div">
         <button data-toggle="modal" data-target="#add-product">Add New Product</button>
+        {console.log(addProducts)}
         <form  onSubmit={saveProducts}>
           <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>No.</TableCell>
-                <TableCell>Product Name</TableCell>
                 <TableCell>Image</TableCell>
+                <TableCell>Product Name</TableCell>
                 <TableCell align="right">Description</TableCell>
                 <TableCell align="right">category</TableCell>
                 <TableCell align="right">Quantity</TableCell>
@@ -259,20 +372,20 @@ function ProductManagement (props){
             </TableHead>
             <TableBody>
               {
-                products.length < 0 ?
-                    products.map((product,i) => (
-                      //console.log(products),
+                addProducts.length > 0 ?
+                    addProducts.map((product,i) => (
+                      //console.log(addProducts),
                     <TableRow key={i}>
                       <TableCell>{i+1}</TableCell>
+                      <TableCell><img src={product.img} className="img-fluid" style={{width: "50px"}} alt={product.title}/></TableCell>  
                       <TableCell component="th" scope="row">
-                        {product.name}
+                        {product.title}
                       </TableCell>
-                      <TableCell><TextField value={product.img} name="img"></TextField></TableCell>
-                      <TableCell align="left"><TextField value={product.description} name="description"></TextField></TableCell>
+                      <TableCell align="left">{product.description}</TableCell>
                       <TableCell align="right">{product.category}</TableCell>
                       <TableCell align="right">{product.qty}</TableCell>
                       <TableCell align="right">{product.price}</TableCell>
-                      <TableCell><button onClick={()=>{console.log(i)}}>X</button></TableCell>
+                      <TableCell><button onClick={()=>{remove(i,product.title)}}>remove</button></TableCell>
                     </TableRow>
                   ))
                   :
@@ -282,7 +395,7 @@ function ProductManagement (props){
           </Table>
         </TableContainer>
         <br/>
-        <button type="submit">Save Product list</button>
+        <button onClick={handleSubmit}>Save Product list</button>
         </form>
         {msgs ? <div className={msgs.msg.param}>{msgs.msg.text}</div>: <p></p>}
       </TabPanel>
@@ -297,10 +410,15 @@ function ProductManagement (props){
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form id="product-form" className="modal-body" onSubmit={handleSubmit} autoComplete="off">
+            <form id="product-form" className="modal-body" onSubmit={addToProductList} autoComplete="off">
               <p>Product Details</p>
               <TextField required type="file" name='img' onChange={e => {e.target.files[0] ? setImg(URL.createObjectURL(e.target.files[0])) : setImg(null)}}/> <br/>
-              <img src={img} className="img-fluid imgPreview" alt="Product"></img>
+              {img ?
+                <img src={img} className="img-fluid imgPreview" alt="Product"></img>
+                :
+                <p></p>
+              }
+
               <br/>
               <TextField required fullWidth size="small" variant="outlined" type="text" className="m-1" label="Enter Product Title" name="title"></TextField>
               <TextField required fullWidth multiline variant="outlined" type="text" className="m-1" label="Enter Product Description" name="description"></TextField>
@@ -310,7 +428,7 @@ function ProductManagement (props){
               <TextField required fullWidth size="small" variant="outlined" type="text" className="m-1" label="Enter Product Price" step=".01" name="price"></TextField>
               <div className="modal-footer d-flex justify-content-end">
                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" className="btn btn-primary" >Save changes</button>
+                <button className="btn btn-primary" >Save changes</button>
               </div>
             </form>
             {msgs ? <div className={msgs.msg.param}>{msgs.msg.text}</div>: <LoadingIndicator/>}

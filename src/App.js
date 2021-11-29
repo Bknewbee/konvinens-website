@@ -96,8 +96,9 @@ function App() {
               {msg ? <h1>{msg.text}</h1>:<div></div>}
             </header>
             <main style={{backgroundColor:"white", minHeight: "90vh",padding:"20px"}}>
-              <GetProducts />
-
+              <GetProducts filter="electronics"/>
+              <GetProducts filter="gardening tools"/>
+              <GetProducts filter="doors"/>
             </main>
           </Route>
           <Route path="/log-in">

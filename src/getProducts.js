@@ -7,7 +7,7 @@ import LoadingIndicator from './loadingIndicator';
 import './getProducts.css';
 
 
-function GetProducts(){
+function GetProducts(props){
 
   const [products, setProducts] = useState(null);
 
@@ -22,7 +22,7 @@ function GetProducts(){
       withCredentials: true
     }
 
-    await trackPromise(axios.get(`https://konvinens.herokuapp.com/api/products`, config)
+    await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/products`,{filter: props.filter}, config)
       .then((res)=>{
         console.log(res.data);
         setProducts(res.data.products);
@@ -33,8 +33,8 @@ function GetProducts(){
     )
   }
   return(
-    <div className="">
-      <h1>List of products</h1>
+    <div id="Product" className="">
+      <h1>List of {props.filter}</h1>
       <div className="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4 pt-2">
         {
           !products ?

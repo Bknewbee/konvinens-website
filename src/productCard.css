@@ -29,7 +29,7 @@
 @media (min-width: 1024px) {
   #Product .card-img-top {
       width: 100%;
-      height: 180px;
+      height: 150px;
       object-fit:contain;
   }
   #Product.card-block{
@@ -38,6 +38,6 @@
   	background-size: cover;
   	transition: all 0.2s ease-in-out !important;
   	border-radius: 10px;
-    height: 470px;
+    height: 440px;
   }
 }
