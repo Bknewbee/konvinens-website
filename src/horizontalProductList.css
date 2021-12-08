@@ -1,0 +1,15 @@
+#HorizontalProductList .scrolling-wrapper{
+	overflow-x: auto;
+	height: 380px;
+}
+
+
+
+
+
+@media (min-width: 1024px) {
+	#HorizontalProductList .scrolling-wrapper{
+		overflow-x: auto;
+		height: 470px;
+	}
+}

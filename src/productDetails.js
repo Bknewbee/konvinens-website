@@ -9,6 +9,7 @@ import {trackPromise} from 'react-promise-tracker';
 import LoadingIndicator from './loadingIndicator';
 //import products from "./productItems.js";
 import Product from './productCard';
+import HorizontalProductList from './horizontalProductList';
 
 import "./productDetails.css";
 
@@ -22,7 +23,8 @@ class ProductDetails extends Component {
       similarProducts: [],
       msg:{},
       purchaseQuantity: 1,
-      cart: ''
+      cart: '',
+      similarProducts: []
     };
     this.changeQuantity = this.changeQuantity.bind(this);
     this.increment = this.increment.bind(this);
@@ -77,7 +79,7 @@ class ProductDetails extends Component {
                 :
                 <p>No items in cart</p>
                 :
-                <p>No cart</p>
+                <p>Empty</p>
               }
             </ul>
   }
@@ -104,10 +106,11 @@ class ProductDetails extends Component {
 
     await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/product`,{"id": this.props.match.params.productId}, config)
       .then((res)=>{
-        console.log(res.data.product);
+        console.log(res.data.similarProducts);
         this.setState({product: res.data.product},
           function(){
             this.setState({productId: this.props.match.params.productId});
+            this.setState({similarProducts: res.data.similarProducts});
           }
         );
 
@@ -181,7 +184,7 @@ class ProductDetails extends Component {
               <p>{this.state.msg.text}</p>
               <h2>{this.state.product.title}</h2>
               <p>{this.state.product.description}</p>
-              <div><button className="btn">Instock : {this.state.product.qty}</button>{this.state.product.onSale ? <button className="btn btn-success">{this.state.product.promoPrice}% OFF</button>: ""}</div>
+              <div><div className="btn">Instock : {this.state.product.qty}</div>{this.state.product.onSale ? <button className="btn btn-success">{this.state.product.promoPrice}% OFF</button>: ""}</div>
 
               <div className="row">
                 <div className="col" style={{fontSize:"1.2em"}}>
@@ -203,10 +206,10 @@ class ProductDetails extends Component {
               <div className="row mb-2" align="right" style={{fontSize:"1.5em"}}>
                 <div className="col-6 d-flex justify-content-around" align="left">
                   <Tooltip title="Add to cart" placement="top">
-                    <AddShoppingCartIcon fontSize="large" onClick={this.addToCart}></AddShoppingCartIcon>
+                    <div className="hover btn"><AddShoppingCartIcon fontSize="large" onClick={this.addToCart}></AddShoppingCartIcon></div>
                   </Tooltip>
-                  <Tooltip title="Add to wish list" placement="top">
-                    <PlaylistAddIcon fontSize="large"></PlaylistAddIcon>
+                  <Tooltip  title="Add to wish list" placement="top">
+                    <div className="hover"><PlaylistAddIcon  fontSize="large"></PlaylistAddIcon></div>
                   </Tooltip>
                 </div>
                 <div className="col-6">
@@ -242,16 +245,8 @@ class ProductDetails extends Component {
         <div style={{backgroundColor:"white"}}>
           <h2>Similar Products</h2>
           <br/>
-          <Grid container spacing={1} justify="center">
-          {
-            this.state.similarProducts.length > 0 ?
-            this.state.similarProducts.map((product, i)=>(
-              <Grid item key={i}><Product id={product.id} img={product.img} name={product.name} owner={product.owner} description={product.description} price={product.price} promoPrice={product.promoPrice} onSale={product.onSale}></Product></Grid>
-            ))
-            :
-            <p>No similar products found</p>
-          }
-          </Grid>
+          <HorizontalProductList products={this.state.similarProducts}/>
+
         </div>
 
       </div>
