@@ -270,7 +270,7 @@ function ProductManagement (props){
       let config = {
         withCredentials: true,
       }
-      await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/get-products`,{storeName:props.match.params.storeName},config)
+      await trackPromise(axios.post(`/api/get-products`,{storeName:props.match.params.storeName},config)
         .then((res)=> {
           if(res.data.user){
             if(res.data.products.length === 0){
@@ -377,7 +377,7 @@ function ProductManagement (props){
                       //console.log(addProducts),
                     <TableRow key={i}>
                       <TableCell>{i+1}</TableCell>
-                      <TableCell><img src={product.img} className="img-fluid" style={{width: "50px"}} alt={product.title}/></TableCell>  
+                      <TableCell><img src={product.img} className="img-fluid" style={{width: "50px"}} alt={product.title}/></TableCell>
                       <TableCell component="th" scope="row">
                         {product.title}
                       </TableCell>

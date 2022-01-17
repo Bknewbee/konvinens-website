@@ -42,7 +42,7 @@ const LogIn = () => {
       withCredentials: true
     }
     setMsg(null);
-    await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/user-login`, formData, config)
+    await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/api/user-login`, formData, config)
       .then((res)=>{
         //console.log(res);
         setMsg(res.data);

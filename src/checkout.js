@@ -400,6 +400,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {trackPromise} from 'react-promise-tracker';
 
+
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -416,6 +417,7 @@ import Alert from '@mui/material/Alert';
 
 //Files
 import './checkout.css';
+import LoadingIndicator from './loadingIndicator';
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -431,6 +433,7 @@ function HorizontalNonLinearStepper() {
   const [skipped, setSkipped] = React.useState(new Set());
 
   const [items, setItems] = React.useState();
+  const [stores, setStores] = React.useState();
   const [msg, setMsg] = React.useState(null);
 
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
@@ -439,6 +442,7 @@ function HorizontalNonLinearStepper() {
   const [addressLine, setAddressline] = useState("");
   const [secondAddressLine, setSecondAddressline] = useState("");
   const [settlement, setSettlement] = useState("");
+  const [total, setTotal] = useState(null);
   //Card variables
   const [cardName, setCardName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
@@ -451,6 +455,7 @@ function HorizontalNonLinearStepper() {
   function EditCart (msg,checkWidth) {
     let sum = 0;
     let totalProducts = 0;
+
 
     const increment = (val) => {
       let cartItems = sessionStorage.getItem('cart').split(',');
@@ -528,6 +533,7 @@ function HorizontalNonLinearStepper() {
       //console.log(items[val]);
     }
 
+
     return (
       checkWidth ?
       <Box sx={{my:2}} >
@@ -564,6 +570,7 @@ function HorizontalNonLinearStepper() {
               <Grid align="right" item xs={3} style={{backgroundColor:"#e3e3e3"}}>
                 <Box sx={{mt: 2,pr:2}}>
                   P {(item.price*parseInt(item.purchaseQty)).toFixed(2)}
+
                 </Box>
               </Grid>
 
@@ -598,8 +605,7 @@ function HorizontalNonLinearStepper() {
         {
           items ?
             (items.map((item, i) => (
-              (sum += item.price,
-              totalProducts += parseInt(item.purchaseQty))
+              (sum+=item.price*parseInt(item.purchaseQty))
             )),
             <Grid container sx={{my: 2}}>
               <Grid align="" item xs={2}>
@@ -610,7 +616,7 @@ function HorizontalNonLinearStepper() {
               </Grid>
               <Grid item xs={1}></Grid>
               <Grid align="right" item xs={3} style={{backgroundColor:"#e3e3e3"}} sx={{pr:2}}>
-                P {(sum*totalProducts).toFixed(2)}
+                P {sum.toFixed(2)}
               </Grid>
             </Grid>
           )
@@ -721,8 +727,7 @@ function HorizontalNonLinearStepper() {
         {
           items ?
             (items.map((item, i) => (
-              (sum += item.price,
-              totalProducts += parseInt(item.purchaseQty))
+              (sum+=item.price*parseInt(item.purchaseQty))
             )),
             <Grid container sx={{my: 2,pt:2,borderTop:1}}>
               <Grid align="" item xs={6}>
@@ -731,9 +736,9 @@ function HorizontalNonLinearStepper() {
               <Grid align="" item xs={2} style={{backgroundColor:"#e3e3e3"}}>
                 {totalProducts}
               </Grid>
-              <Grid xs={2}></Grid>
+              <Grid item xs={2}></Grid>
               <Grid align="right" item xs={2} style={{backgroundColor:"#e3e3e3"}} sx={{pr:2}}>
-                P {(sum*totalProducts).toFixed(2)}
+                P {sum.toFixed(2)}
               </Grid>
             </Grid>
           )
@@ -747,6 +752,23 @@ function HorizontalNonLinearStepper() {
     return ['Confirm cart items', 'Confirm adresses','Delevery service', 'Payment','Review Order'];
   }
   function ChooseDelivery (checkWidth) {
+
+    const updateStores = (e) =>{
+      console.log(e.target.value);
+      console.log(e.target.name);
+      let newDetails = stores;
+      newDetails.forEach((item, i, arr) => {
+        console.log(item.name);
+        if(item.name === e.target.name){
+          arr[i].selectedDelivery = e.target.value
+        }
+      });
+
+      console.log(newDetails);
+      setRefresh(!refresh)
+      setStores(newDetails);
+    }
+
     return (
       checkWidth ?
       <Box>
@@ -761,6 +783,24 @@ function HorizontalNonLinearStepper() {
           <Grid item xs={6}>
           <h1>Select delevery service</h1>
           <p>Delivery details</p>
+
+          {
+            stores ?
+            stores.map((store, key)=>(
+              <div key={key}>
+              <p align="left">{store.name}</p>
+              <select className="custom-select my-1 mr-sm-2" id="deliveryType" name={store.name} value={store.selectedDelivery} onChange={updateStores} >
+                {store.deliveryType.map((e, i)=>{
+                  return <option key={i}>{e}</option>
+                })}
+              </select>
+              </div>
+            ))
+            :
+            <p></p>
+          }
+
+
           </Grid>
         </Grid>
       </Box>
@@ -883,7 +923,20 @@ function HorizontalNonLinearStepper() {
                 <Grid align="left" item xs={4}>
                   {item.title}
                 </Grid>
-                <Grid align="right" item xs={8}>
+                <Grid item xs={2}>
+                {
+                  stores ?
+                  stores.map((store, i)=>(
+                    item.owner === store.name ?
+                    <p key={i}>To be {store.selectedDelivery}</p>
+                    :
+                    <p key={i}></p>
+                  ))
+                  :
+                  <p></p>
+                }
+                </Grid>
+                <Grid align="right" item xs={6}>
                   <p>@ P{item.price} x {item.purchaseQty}(qty) = P {(item.price*item.purchaseQty).toFixed(2)}</p>
                 </Grid>
               </Grid>
@@ -894,15 +947,14 @@ function HorizontalNonLinearStepper() {
           {
             items ?
               (items.map((item, i) => (
-                (sum += item.price,
-                totalProducts += parseInt(item.purchaseQty))
+                (sum+=item.price*parseInt(item.purchaseQty))
               )),
               <Grid container sx={{mt: 2,borderTop:1,pt:2}}>
                 <Grid align="" item xs={8}>
                   Total
                 </Grid>
                 <Grid align="right" item xs={4}>
-                  P {(sum*totalProducts).toFixed(2)}
+                  P {sum.toFixed(2)}
                 </Grid>
               </Grid>
             )
@@ -927,56 +979,7 @@ function HorizontalNonLinearStepper() {
       </Box>
       :
       <Box sx={{my:2}}>
-        <p align="left" className="font-weight-bold">Order summary</p>
-        <Grid container sx={{my:2,backgroundColor:"green"}}>
-          {
-            items?
-            items.map((item, i)=>(
-              <Grid container key={i}>
-                <Grid align="left" item xs={8}>
-                  {item.title}
-                </Grid>
-                <Grid align="right" item xs={4}>
-                  <p>@ : P{item.price} x {item.purchaseQty}(qty) = P {item.price*item.purchaseQty}</p>
-                </Grid>
-              </Grid>
-            ))
-            :
-            <p></p>
-          }
-          {
-            items ?
-              (items.map((item, i) => (
-                (sum += item.price,
-                totalProducts += parseInt(item.purchaseQty))
-              )),
-              <Grid container sx={{my: 2,borderTop:1}}>
-                <Grid align="" item xs={8}>
-                  Total
-                </Grid>
-                <Grid align="right" item xs={4}>
-                  P {(sum*totalProducts).toFixed(2)}
-                </Grid>
-              </Grid>
-            )
-            :
-            <p></p>
-          }
-        </Grid>
-        <Grid align="left" container spacing={2} sx={{my:2}}>
-          <Grid item xs={6}>
-            <p className="font-weight-bold">Shipping</p>
-            <p>{addressLine}</p>
-            <p>{secondAddressLine}</p>
-            <p>{settlement}</p>
-          </Grid>
-          <Grid item xs={6}>
-            <p className="font-weight-bold">Payment Details</p>
-            <p>{cardName}</p>
-            <p>{cardNumber}</p>
-            <p>{expiryDate}</p>
-          </Grid>
-        </Grid>
+
       </Box>
     )
   }
@@ -1116,7 +1119,7 @@ function HorizontalNonLinearStepper() {
 
       console.log(findItems);
 
-      await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/get-items`, findItems, config)
+      await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/api/get-items`, findItems, config)
         .then((res)=> {
           res.data.products.map((item)=>{
             itemsArray.map((itema)=>{
@@ -1142,6 +1145,9 @@ function HorizontalNonLinearStepper() {
             })
           })
           setItems(result)
+
+          console.log(res.data);
+          setStores(res.data.storeDetails)
         })
         .catch((err)=> console.log(err))
       )
@@ -1151,10 +1157,30 @@ function HorizontalNonLinearStepper() {
   }
 
   const handleSubmit = () => {
-
     console.log("submit");
-    //send data
 
+    let config = {
+      withCredentials: true
+    }
+
+    let orderedItems = items;
+
+    orderedItems.forEach((item, i, arr) => {
+      console.log(arr[i]);
+      delete arr[i].image
+    });
+
+    let orderDetails = {items: orderedItems, stores: stores,address: addressLine,secondAddressLine:secondAddressLine,settlement:settlement}
+
+    axios.post(`https://konvinens.herokuapp.com/api/api/create-order`, orderDetails, config)
+      .then((res)=>{
+        console.log(res);
+
+        setMsg(res.data.msg)
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
   }
 
 
@@ -1204,10 +1230,18 @@ function HorizontalNonLinearStepper() {
         </Stepper>
         {activeStep === steps.length && (
           <Paper square elevation={0} sx={{ p: 3 }}>
-            <Typography>
-            All steps completed - you&apos;re finished<br/>
-            Email of your reciept will be sent to you
-            </Typography>
+
+            {
+              msg?
+              <Typography className={msg.param}>
+              {msg.text}
+              </Typography>
+              :
+              <LoadingIndicator/>
+            }
+
+
+
 
             <a href="/" >Home</a>
           </Paper>
@@ -1236,10 +1270,14 @@ function HorizontalNonLinearStepper() {
         </Stepper>
         {activeStep === steps.length ? (
           <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              All steps completed - you&apos;re finished<br/>
-              Email of your reciept will be sent to you
-            </Typography>
+            {
+              msg?
+              <Typography className={msg.param} sx={{ mt: 2, mb: 1 }}>
+              {msg.text}
+              </Typography>
+              :
+              <LoadingIndicator/>
+            }
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
               <Box sx={{ flex: '1 1 auto' }} />
               <a href="/" >Home</a>

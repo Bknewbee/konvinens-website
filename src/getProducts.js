@@ -22,7 +22,7 @@ function GetProducts(props){
       withCredentials: true
     }
 
-    await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/products`,{filter: props.filter}, config)
+    await trackPromise(axios.post(`https://konvinens.herokuapp.com/api/api/products`,{filter: props.filter}, config)
       .then((res)=>{
         console.log(res.data);
         setProducts(res.data.products);
