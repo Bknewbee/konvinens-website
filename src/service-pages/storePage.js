@@ -46,7 +46,8 @@ function StorePage (props){
             <h1>{store.name}</h1>
             <hr/>
             <a href={"/store-service/"+store.name+"/edit-service-details"}>Edit Store Details</a> <br/>
-            <a href={"/store-service/"+store.name+"/product-management"}>Manage store products</a>
+            <a href={"/store-service/"+store.name+"/product-management"}>Manage store products</a> <br/>
+            <a href={"/store-service/"+store.name+"/order-management"}>Manage store orders</a>
           </div>
           :
           <div>

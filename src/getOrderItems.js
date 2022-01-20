@@ -44,10 +44,10 @@ function GetOrderItems (props){
                   items.map((item,i)=>(
                         item.owner === store.name?
                         <Grid container key={i} >
-                          <Grid item xs={4}>
+                          <Grid item xs={6}>
                             <p>Title :{item.title}</p>
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={3}>
                             {
                               props.items.map((propItem, i)=>(
                                 propItem.itemId === item._id?
@@ -57,7 +57,7 @@ function GetOrderItems (props){
                               ))
                             }
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={3}>
                             <p>P{item.price}</p>
                           </Grid>
                       </Grid>

@@ -3,7 +3,7 @@ import axios from "axios";
 import {trackPromise} from 'react-promise-tracker';
 import {Grid} from "@mui/material";
 
-function GetOrderItems (props){
+function GetServiceOrderItems (props){
 
   const [items,setItems] = useState(null)
 
@@ -13,7 +13,7 @@ function GetOrderItems (props){
     }
 
     await trackPromise(
-      axios.post(`/api/get-items`, props.ids ,config)
+      axios.post(`https://konvinens.herokuapp.com/api/get-items`, props.ids ,config)
         .then((res)=>{
 
           console.log(res.data)
@@ -29,9 +29,34 @@ function GetOrderItems (props){
   }, []);
   return(
     <div>
-      <p>Service Order Items<p/>
+      <p>Service Order Items</p>
+        {
+          items?
+          items.map((item,i)=>(
+                <Grid container key={i} >
+                  <Grid item xs={6} align="left">
+                    <p>Title :{item.title}</p>
+                  </Grid>
+                  <Grid item xs={3}>
+                    {
+                      props.items.map((propItem, i)=>(
+                        propItem.itemId === item._id?
+                        <p key={i}>Qty: {propItem.purchaseQty}</p>
+                        :
+                        <p></p>
+                      ))
+                    }
+                  </Grid>
+                  <Grid item xs={3}>
+                    <p>P{item.price}</p>
+                  </Grid>
+              </Grid>
+          ))
+          :
+          <p></p>
+        }
     </div>
   )
 }
 
-export default GetOrderItems;
+export default GetServiceOrderItems;

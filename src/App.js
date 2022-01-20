@@ -21,11 +21,14 @@ import EmailConfirmation from "./emailConfirmation.js";
 
 //User
 import UserAccount from "./userAccount.js";
+
+import OrderDetails from './orderDetails';
 //Services
 import StorePage from './service-pages/storePage';
 import EditStoreDetails from './service-pages/editStore';
 import ProductManagement from './service-pages/productManagement';
-import OrderDetails from './orderDetails';
+import ServiceOrderManagement from './service-pages/serviceOrderManagement'
+import ServiceOrderDetails  from './service-pages/serviceOrderDetails'
 //Forms
 import UserRegistration from './forms/userRegistration';
 import LogIn from './forms/logIn';
@@ -138,9 +141,16 @@ function App() {
           <Route path="/reset">
             <Reset/>
           </Route>
-          <Route path={`/order-details/:id`}>
+          <Route exact path={`/order-details/:id`}>
             <OrderDetails/>
           </Route>
+          <Route path={`/order-details/:storeName/:id`}>
+            <ServiceOrderDetails/>
+          </Route>
+          <Route path={`/store-service/:storeName/order-management`}>
+            <ServiceOrderManagement/>
+          </Route>
+
         </Switch>
       </Router>
     {/*

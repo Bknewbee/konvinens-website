@@ -23,14 +23,14 @@ export default function OrderTable(props){
               <TableRow key={i}
                 sx={{'&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell>no.</TableCell>
-                <TableCell component="th" scope="row"><a href={"/order-details/"+order._id}>{order.number}</a></TableCell>
+                <TableCell component="th" scope="row"><a href={"/order-details/"+order.owner+"/"+order._id}>{order.number}</a></TableCell>
                 <TableCell>...</TableCell>
                 <TableCell align="right">{order.items.length}</TableCell>
                 <TableCell align="right">P{order.total}</TableCell>
               </TableRow>
               ))
             :
-            <p></p>
+            <TableRow></TableRow>
           }
         </TableBody>
       </Table>

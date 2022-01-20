@@ -53,7 +53,6 @@ function OrderDetails(props) {
               <Grid item xs={12}>
                 <GetOrderItems ids={ids?ids:null} items={order.items}/>
               </Grid>
-
             </Grid>
           </Grid>
           <Grid item xs={8} sx={{py:2}}>
