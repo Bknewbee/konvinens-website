@@ -10,6 +10,7 @@ import {
 
 import ServiceManagement from './serviceManagement';
 import EditUserAccount from './editUserAccount';
+import OrderManagement from './orderManagement';
 
 import "./userAccount.css"
 
@@ -42,6 +43,16 @@ function UserAccount (){
                 </Link>
                 </div>
               </Grid>
+              <Grid>
+                <div className="card" style={{width: "18em"}}>
+                  <Link to={`${match.url}/orders-management`}>
+                  <div className="card-body">
+                    <h5 className="card-title">Order's</h5>
+                    <p>Manage order details</p>
+                  </div>
+                </Link>
+                </div>
+              </Grid>
             </Grid>
           </Route>
           <Route path={`${match.path}/login&security`}>
@@ -49,6 +60,9 @@ function UserAccount (){
           </Route>
           <Route path={`${match.path}/service-management`}>
             <ServiceManagement/>
+          </Route>
+          <Route path={`${match.path}/orders-management`}>
+            <OrderManagement/>
           </Route>
         </Switch>
       </Router>

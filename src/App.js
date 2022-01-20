@@ -25,6 +25,7 @@ import UserAccount from "./userAccount.js";
 import StorePage from './service-pages/storePage';
 import EditStoreDetails from './service-pages/editStore';
 import ProductManagement from './service-pages/productManagement';
+import OrderDetails from './orderDetails';
 //Forms
 import UserRegistration from './forms/userRegistration';
 import LogIn from './forms/logIn';
@@ -136,6 +137,9 @@ function App() {
           </Route>
           <Route path="/reset">
             <Reset/>
+          </Route>
+          <Route path={`/order-details/:id`}>
+            <OrderDetails/>
           </Route>
         </Switch>
       </Router>
